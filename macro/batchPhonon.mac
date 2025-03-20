@@ -1,0 +1,17 @@
+/tracking/verbose 0
+
+/hvev/HitsFile phononTF.txt
+
+/run/initialize
+#/process/inactivate phononScattering
+#/process/inactivate phononDownconversion
+/g4cmp/phononBounces 10000000
+
+
+/gps/particle phononTF
+/gps/energy 2.7e-3 eV
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 0. mm
+/gps/ang/type iso
+
+/run/beamOn 100000

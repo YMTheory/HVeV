@@ -3,10 +3,10 @@
 /run/initialize
 /g4cmp/phononBounces 10000000
 
-/gps/particle phononL
-/gps/energy 2.7e-3 eV
+/gps/energy 2.7 eV
 /gps/pos/type Point
 /gps/pos/centre 0. 0. 0. mm
 /gps/ang/type iso
 
 /run/beamOn 1
+
