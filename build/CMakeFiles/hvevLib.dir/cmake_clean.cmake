@@ -1,0 +1,23 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/hvevLib.dir/src/HVeVActionInitialization.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVActionInitialization.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVConfigManager.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVConfigManager.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVConfigMessenger.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVConfigMessenger.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVDetectorConstruction.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVDetectorConstruction.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.o.d"
+  "libg4cmpHVeV.dylib"
+  "libg4cmpHVeV.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/hvevLib.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
