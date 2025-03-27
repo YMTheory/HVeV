@@ -11,6 +11,10 @@
 #include "G4CMPDriftHole.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4GeneralParticleSource.hh"
+#include "G4ParticleTable.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4IonTable.hh"
+
 
 using namespace std;
 
@@ -54,6 +58,13 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         // Generate the drift hole
         fParticleGPS->GeneratePrimaryVertex(anEvent);
     
+    }
+
+    else if (f_primaryParticleName == "Be7") {
+        G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(4, 7, 0); // Z=4, A=7
+        fParticleGPS->SetParticleDefinition(ion);
+        fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GeneratePrimaryVertex(anEvent);
     }
 
     else {

@@ -6,6 +6,7 @@
 #include "G4ThreeVector.hh"
 #include "G4VProcess.hh"
 #include "G4TrackingManager.hh"
+#include "G4ParticleDefinition.hh"
 
 HVeVTrackingAction::HVeVTrackingAction()
 :G4UserTrackingAction()
@@ -42,6 +43,14 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
                << pretrack_z << " mm"
                << G4endl;
 
+    }
+
+    G4ParticleDefinition* particle = track->GetDefinition();
+    if(particle->GetParticleType() == "nucleus") {
+        G4double recoilEnergy = track->GetKineticEnergy();
+        if (recoilEnergy > 0) {
+            G4cout << "Nuclear recoil detected! Energy = " << recoilEnergy / eV << " eV" << G4endl;
+        }
     }
 
     if (track->GetParentID() == 0 or track->GetParentID() == 1 or track->GetParentID() == 2) {

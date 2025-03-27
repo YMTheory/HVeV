@@ -56,10 +56,10 @@ G4VPhysicalVolume* HVeVDetectorConstruction::Construct()
         G4LogicalVolumeStore::GetInstance()->Clean();
         G4SolidStore::GetInstance()->Clean();
 
-        if (outputFileName != HVeVConfigManager::GetHitOutput()) {
-        outputFileName = HVeVConfigManager::GetHitOutput();
-            if (electrodeSensitivity) electrodeSensitivity->SetOutputFile(outputFileName);
-        }
+        //if (outputFileName != HVeVConfigManager::GetHitOutput()) {
+        //outputFileName = HVeVConfigManager::GetHitOutput();
+        //    if (electrodeSensitivity) electrodeSensitivity->SetOutputFile(outputFileName);
+        //}
 
         if (voltage != HVeVConfigManager::GetVoltage()) {
             delete fEMField; fEMField = nullptr;

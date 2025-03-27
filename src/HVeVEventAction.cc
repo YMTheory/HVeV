@@ -14,4 +14,5 @@ void HVeVEventAction::BeginOfEventAction(const G4Event* event)
 }
 
 void HVeVEventAction::EndOfEventAction(const G4Event*)
-{}
+{
+}
