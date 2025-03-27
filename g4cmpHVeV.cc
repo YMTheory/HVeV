@@ -4,6 +4,9 @@
 #include "G4VisExecutive.hh"
 
 #include "G4CMPPhysicsList.hh"
+#include "G4CMPPhysics.hh"
+#include "FTFP_BERT.hh"
+
 #include "G4CMPConfigManager.hh"
 #include "HVeVActionInitialization.hh"
 #include "HVeVConfigManager.hh"
@@ -20,7 +23,13 @@ int main(int argc,char** argv)
  HVeVDetectorConstruction* detector = new HVeVDetectorConstruction();
  runManager->SetUserInitialization(detector);
 
- G4VUserPhysicsList* physics = new G4CMPPhysicsList();
+ // Old codes where only G4CMPPhysicsList was registered.
+ //G4VUserPhysicsList* physics = new G4CMPPhysicsList();
+ //physics->SetCuts();
+ //runManager->SetUserInitialization(physics);
+
+ FTFP_BERT* physics = new FTFP_BERT;  
+ physics->RegisterPhysics(new G4CMPPhysics);
  physics->SetCuts();
  runManager->SetUserInitialization(physics);
  
@@ -31,6 +40,8 @@ int main(int argc,char** argv)
  // Create configuration managers to ensure macro commands exist
  G4CMPConfigManager::Instance();
  HVeVConfigManager::Instance();
+
+ 
 
  // Visualization manager
  //
