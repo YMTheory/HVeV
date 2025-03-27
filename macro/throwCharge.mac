@@ -1,12 +1,10 @@
-/tracking/verbose 2
+/tracking/verbose 0
+
+
+/hvev/PrimaryParticleName chargepair
+/hvev/PrimaryParticleEnergy 0.001 eV
+/hvev/voltage 50. volt
 
 /run/initialize
-/g4cmp/phononBounces 10000000
-
-/gps/energy 2.7 eV
-/gps/pos/type Point
-/gps/pos/centre 0. 0. 0. mm
-/gps/ang/type iso
-
-/run/beamOn 1
+/run/beamOn 3
 

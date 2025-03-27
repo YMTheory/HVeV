@@ -1,0 +1,68 @@
+/vis/open HepRepFile
+
+# now ensure that the geometry is displayed
+/vis/drawVolume
+
+# add the trajectories
+/tracking/storeTrajectory 1
+/vis/scene/add/hits
+
+#/vis/filtering/trajectories/create/particleFilter
+#/vis/filtering/trajectories/particleFilter-0/add G4CMPDriftElectron
+#/vis/filtering/trajectories/particleFilter-0/add G4CMPDriftHole
+/vis/scene/add/trajectories
+
+# add the step markers
+/vis/modeling/trajectories/create/drawByParticleID
+#/vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByParticleID-0/set phononTS Red 
+/vis/modeling/trajectories/drawByParticleID-0/set phononTF Green
+/vis/modeling/trajectories/drawByParticleID-0/set phononL Gray
+
+/vis/modeling/trajectories/drawByParticleID-0/set G4CMPDriftElectron Blue
+/vis/modeling/trajectories/drawByParticleID-0/set e- Blue
+/vis/modeling/trajectories/drawByParticleID-0/set G4CMPDriftHole Orange
+/vis/modeling/trajectories/drawByParticleID-0/set gamma Black
+/vis/modeling/trajectories/drawByParticleID-0/set nu_e Green
+/vis/modeling/trajectories/drawByParticleID-0/set Li7 Gray
+
+# ensure that they are not cleared at the end of the event
+/vis/scene/endOfEventAction accumulate
+
+#/hvev/PrimaryParticleName chargepair
+#/hvev/PrimaryParticleEnergy 0.001 eV
+/hvev/voltage 10 volt
+
+#/g4cmp/sampleLuke 0.001
+
+/run/initialize
+
+#G4CMP Settings
+/g4cmp/producePhonons 1
+/g4cmp/produceCharges 1
+/g4cmp/sampleLuke 0.01
+
+/hvev/PrimaryParticleName Be7
+
+# Particle generation
+/gps/number 1
+#/gps/particle gamma
+#/gps/pos/type Point
+#/gps/direction 0 -4 -1
+/gps/pos/centre 0.0 0.0 1.999 mm # A bit above the chip top
+#/gps/pos/centre 0.0 0.1 0.481 cm # halfway between bottom and top of chip (Top of chip is 0.5cm)
+/gps/ene/type Mono
+/gps/energy 0. eV
+/run/beamOn 1
+
+#/gps/particle G4CMPDriftElectron
+#/gps/particle phononL
+#/gps/pos/type Point
+#/gps/pos/centre 0. 0. 0. mm
+#/gps/ene/type Mono
+#/gps/ene/mono 0.1 eV
+
+
+#/run/beamOn 1
+/vis/viewer/flush
+

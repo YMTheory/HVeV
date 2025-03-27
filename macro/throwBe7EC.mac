@@ -1,0 +1,20 @@
+/tracking/verbose 2
+
+/random/setSeeds 111 9932
+#/hvev/HitsFile /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/study/Be7/Be7EC_test_voltage10.txt
+
+/hvev/voltage 10 volt
+
+/run/initialize
+
+/g4cmp/produceCharges 0.01
+/g4cmp/producePhonons 0.01
+/g4cmp/sampleLuke 0.01
+
+/hvev/PrimaryParticleName Be7
+
+/gps/number 1
+/gps/pos/centre 0. 0. 1.990 mm
+/gps/ene/mono 0.0 eV
+
+/run/beamOn 1
