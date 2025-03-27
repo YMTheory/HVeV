@@ -3,6 +3,7 @@
 #include "HVeVConfigManager.hh"
 #include "G4CMPLogicalBorderSurface.hh"
 #include "G4CMPPhononElectrode.hh"
+#include "G4CMPVElectrodePattern.hh"
 #include "G4CMPSurfaceProperty.hh"
 #include "G4Box.hh"
 #include "G4Colour.hh"
@@ -147,7 +148,7 @@ void HVeVDetectorConstruction::SetupGeometry()
     }
     
     // Set up the electric field across the silicon substrate
-    // AttachField(fSiliconLogical);
+    AttachField(fSiliconLogical);
 
     if (!fConstructed) {
         const G4double GHz = 1e9 * hertz;
@@ -212,6 +213,8 @@ AttachPhononSensor(G4CMPSurfaceProperty* surfProp)
 
     // Attach electrode object to handle KaplanQP interface
     surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
+    // TEST if the electrode object is attached
+    G4CMPVElectrodePattern* electrode = surfProp->GetPhononElectrode();
 }
 
 void HVeVDetectorConstruction::AttachField(G4LogicalVolume* lv)
@@ -225,4 +228,5 @@ void HVeVDetectorConstruction::AttachField(G4LogicalVolume* lv)
         lv->SetFieldManager(fFieldMgr, true);
     }
     lv->GetFieldManager()->SetDetectorField(fEMField);
+    G4cout << "Applied bias voltage " << voltage << " volt across the silicon substrate" << G4endl;
 }
