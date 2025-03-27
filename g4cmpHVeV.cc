@@ -6,6 +6,9 @@
 #include "G4CMPPhysicsList.hh"
 #include "G4CMPPhysics.hh"
 #include "FTFP_BERT.hh"
+#include "G4DecayPhysics.hh"
+#include "G4RadioactiveDecayPhysics.hh"
+#include "G4EmStandardPhysics.hh"
 
 #include "G4CMPConfigManager.hh"
 #include "HVeVActionInitialization.hh"
@@ -30,6 +33,9 @@ int main(int argc,char** argv)
 
  FTFP_BERT* physics = new FTFP_BERT;  
  physics->RegisterPhysics(new G4CMPPhysics);
+ physics->RegisterPhysics(new G4DecayPhysics);
+ physics->RegisterPhysics(new G4RadioactiveDecayPhysics);
+ physics->RegisterPhysics(new G4EmStandardPhysics);
  physics->SetCuts();
  runManager->SetUserInitialization(physics);
  

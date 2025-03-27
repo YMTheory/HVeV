@@ -46,7 +46,9 @@ set(hvev_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVDetectorConstruction.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVPrimaryGeneratorAction.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVSensitivity.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVRunAction.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVEventAction.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVTrackingAction.cc
     )
     
 if(USE_GEANT4_STATIC_LIBS)

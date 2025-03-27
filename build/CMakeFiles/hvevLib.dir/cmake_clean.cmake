@@ -11,8 +11,12 @@ file(REMOVE_RECURSE
   "CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o.d"
   "CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o"
   "CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o.d"
   "CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.o"
   "CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.o.d"
+  "CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o"
+  "CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o.d"
   "libg4cmpHVeV.dylib"
   "libg4cmpHVeV.pdb"
 )

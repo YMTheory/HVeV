@@ -1130,6 +1130,8 @@ CMakeFiles/hvevLib.dir/src/HVeVActionInitialization.cc.o: \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4StepPoint.icc \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4TrackVector.hh \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4Step.icc \
+  /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/include/HVeVRunAction.hh \
+  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4UserRunAction.hh \
   /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/include/HVeVEventAction.hh \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4UserEventAction.hh \
   /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/include/HVeVTrackingAction.hh \

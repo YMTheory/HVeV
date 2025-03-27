@@ -355,6 +355,30 @@ src/HVeVPrimaryGeneratorAction.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.s
 .PHONY : src/HVeVPrimaryGeneratorAction.cc.s
 
+src/HVeVRunAction.o: src/HVeVRunAction.cc.o
+.PHONY : src/HVeVRunAction.o
+
+# target to build an object file
+src/HVeVRunAction.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o
+.PHONY : src/HVeVRunAction.cc.o
+
+src/HVeVRunAction.i: src/HVeVRunAction.cc.i
+.PHONY : src/HVeVRunAction.i
+
+# target to preprocess a source file
+src/HVeVRunAction.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.i
+.PHONY : src/HVeVRunAction.cc.i
+
+src/HVeVRunAction.s: src/HVeVRunAction.cc.s
+.PHONY : src/HVeVRunAction.s
+
+# target to generate assembly for a file
+src/HVeVRunAction.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.s
+.PHONY : src/HVeVRunAction.cc.s
+
 src/HVeVSensitivity.o: src/HVeVSensitivity.cc.o
 .PHONY : src/HVeVSensitivity.o
 
@@ -378,6 +402,30 @@ src/HVeVSensitivity.s: src/HVeVSensitivity.cc.s
 src/HVeVSensitivity.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.s
 .PHONY : src/HVeVSensitivity.cc.s
+
+src/HVeVTrackingAction.o: src/HVeVTrackingAction.cc.o
+.PHONY : src/HVeVTrackingAction.o
+
+# target to build an object file
+src/HVeVTrackingAction.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o
+.PHONY : src/HVeVTrackingAction.cc.o
+
+src/HVeVTrackingAction.i: src/HVeVTrackingAction.cc.i
+.PHONY : src/HVeVTrackingAction.i
+
+# target to preprocess a source file
+src/HVeVTrackingAction.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.i
+.PHONY : src/HVeVTrackingAction.cc.i
+
+src/HVeVTrackingAction.s: src/HVeVTrackingAction.cc.s
+.PHONY : src/HVeVTrackingAction.s
+
+# target to generate assembly for a file
+src/HVeVTrackingAction.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hvevLib.dir/build.make CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.s
+.PHONY : src/HVeVTrackingAction.cc.s
 
 # Help Target
 help:
@@ -414,9 +462,15 @@ help:
 	@echo "... src/HVeVPrimaryGeneratorAction.o"
 	@echo "... src/HVeVPrimaryGeneratorAction.i"
 	@echo "... src/HVeVPrimaryGeneratorAction.s"
+	@echo "... src/HVeVRunAction.o"
+	@echo "... src/HVeVRunAction.i"
+	@echo "... src/HVeVRunAction.s"
 	@echo "... src/HVeVSensitivity.o"
 	@echo "... src/HVeVSensitivity.i"
 	@echo "... src/HVeVSensitivity.s"
+	@echo "... src/HVeVTrackingAction.o"
+	@echo "... src/HVeVTrackingAction.i"
+	@echo "... src/HVeVTrackingAction.s"
 .PHONY : help
 
 

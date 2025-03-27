@@ -975,6 +975,7 @@ CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/iomanip \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/map \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/__tree \
+  /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/include/HVeVConfigManager.hh \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4Event.hh \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/evtdefs.hh \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4Allocator.hh \
@@ -1212,4 +1213,9 @@ CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o: \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4UIparameter.hh \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4UItokenNum.hh \
   /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4ApplicationState.hh \
-  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4GeneralParticleSourceData.hh
+  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4GeneralParticleSourceData.hh \
+  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4ParticleTable.hh \
+  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4ParticleTableIterator.hh \
+  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4ParticleTable.icc \
+  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4IonTable.hh \
+  /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/include/Geant4/G4Ions.hh

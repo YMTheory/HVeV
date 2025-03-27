@@ -156,10 +156,24 @@ CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVSensitivity.cc -o CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.s
 
+CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o: CMakeFiles/hvevLib.dir/flags.make
+CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o: /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVRunAction.cc
+CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o: CMakeFiles/hvevLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o -MF CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o.d -o CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o -c /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVRunAction.cc
+
+CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVRunAction.cc > CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.i
+
+CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVRunAction.cc -o CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.s
+
 CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o: CMakeFiles/hvevLib.dir/flags.make
 CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o: /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVEventAction.cc
 CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o: CMakeFiles/hvevLib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o -MF CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o.d -o CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o -c /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVEventAction.cc
 
 CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.i: cmake_force
@@ -170,6 +184,20 @@ CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVEventAction.cc -o CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.s
 
+CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o: CMakeFiles/hvevLib.dir/flags.make
+CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o: /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVTrackingAction.cc
+CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o: CMakeFiles/hvevLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o -MF CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o.d -o CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o -c /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVTrackingAction.cc
+
+CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVTrackingAction.cc > CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.i
+
+CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/src/HVeVTrackingAction.cc -o CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.s
+
 # Object files for target hvevLib
 hvevLib_OBJECTS = \
 "CMakeFiles/hvevLib.dir/src/HVeVActionInitialization.cc.o" \
@@ -178,7 +206,9 @@ hvevLib_OBJECTS = \
 "CMakeFiles/hvevLib.dir/src/HVeVDetectorConstruction.cc.o" \
 "CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o" \
 "CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.o" \
-"CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o"
+"CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o" \
+"CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o" \
+"CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o"
 
 # External object files for target hvevLib
 hvevLib_EXTERNAL_OBJECTS =
@@ -189,7 +219,9 @@ libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/src/HVeVConfigMessenger.cc.o
 libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/src/HVeVDetectorConstruction.cc.o
 libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/src/HVeVPrimaryGeneratorAction.cc.o
 libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/src/HVeVSensitivity.cc.o
+libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/src/HVeVRunAction.cc.o
 libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/src/HVeVEventAction.cc.o
+libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/src/HVeVTrackingAction.cc.o
 libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/build.make
 libg4cmpHVeV.dylib: /Users/yumiao/Documents/Softwares/Geant4/G4CMP/G4CMP-install/lib/libG4cmp.dylib
 libg4cmpHVeV.dylib: /Users/yumiao/Documents/Softwares/Geant4/G4CMP/G4CMP-install/lib/libqhullcpp.dylib
@@ -230,7 +262,7 @@ libg4cmpHVeV.dylib: /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-inst
 libg4cmpHVeV.dylib: /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/lib/libG4clhep.dylib
 libg4cmpHVeV.dylib: /Users/yumiao/Documents/Softwares/Geant4/geant4-v10.7.4-install/lib/libG4ptl.0.0.2.dylib
 libg4cmpHVeV.dylib: CMakeFiles/hvevLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX shared library libg4cmpHVeV.dylib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX shared library libg4cmpHVeV.dylib"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hvevLib.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
