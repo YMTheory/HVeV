@@ -14,6 +14,8 @@ HVeVConfigManager* HVeVConfigManager::Instance() {
 HVeVConfigManager::HVeVConfigManager()
   : Hit_file(getenv("HVeV_HIT_FILE")?getenv("HVeV_HIT_FILE"):"phonon_hits.txt"),
     voltage(getenv("HVeV_VOLTAGE")?strtod(getenv("HVeV_VOLTAGE"),0)*volt:0.),
+    PrimaryParticleName(getenv("HVeV_PRIMARY_PARTICLE_NAME")?getenv("HVeV_PRIMARY_PARTICLE_NAME"):"e-"),
+    PrimaryParticleEnergy(getenv("HVeV_PRIMARY_PARTICLE_ENERGY")?strtod(getenv("HVeV_PRIMARY_PARTICLE_ENERGY"),0)*eV:1.*eV),
     messenger(new HVeVConfigMessenger(this)) {;}
 
 HVeVConfigManager::~HVeVConfigManager() {

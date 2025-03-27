@@ -19,6 +19,8 @@ class HVeVConfigMessenger : public G4UImessenger {
         HVeVConfigManager* theManager;
         G4UIcmdWithAString* hitsCmd;
         G4UIcmdWithADoubleAndUnit* voltageCmd;
+        G4UIcmdWithAString* primaryParticleNameCmd;
+        G4UIcmdWithADoubleAndUnit* primaryParticleEnergyCmd;
 
     private:
         HVeVConfigMessenger(const HVeVConfigMessenger&); // Copying is forbidden
