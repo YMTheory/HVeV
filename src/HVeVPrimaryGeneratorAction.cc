@@ -1,4 +1,5 @@
 #include "HVeVPrimaryGeneratorAction.hh"
+#include "HVeVConfigManager.hh"
 
 #include "G4Event.hh"
 #include "G4Geantino.hh"
@@ -22,12 +23,16 @@ HVeVPrimaryGeneratorAction::~HVeVPrimaryGeneratorAction() {
 }
 
 void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
-    if (fParticleGPS->GetParticleDefinition() == G4Geantino::Definition()) {
+
+    G4String f_primaryParticleName = HVeVConfigManager::GetPrimaryParticleName();
+    G4double f_primaryParticleEnergy = HVeVConfigManager::GetPrimaryParticleEnergy();
+
+    if (f_primaryParticleName == "chargepair") {
         // Generate Drift Electron:
         fParticleGPS->SetParticleDefinition(G4CMPDriftElectron::Definition());
         // Set the energy for the drift electron
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
-        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(1.0 * eV);
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(f_primaryParticleEnergy * eV);
         // Set the position of the drift electron
         fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType("Point");
         fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(0.0, 0.0, 0.0));
@@ -40,7 +45,7 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         fParticleGPS->SetParticleDefinition(G4CMPDriftHole::Definition());
         // Set the energy for the drift hole
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
-        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(1.0 * eV);
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(f_primaryParticleEnergy * eV);
         // Set the position of the drift hole
         fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType("Point");
         fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(0.0, 0.0, 0.0));
