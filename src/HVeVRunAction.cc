@@ -6,6 +6,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 
+#include "HVeVConfigManager.hh"
+
 HVeVRunAction::HVeVRunAction()
 : G4UserRunAction()
 {
@@ -37,7 +39,7 @@ void HVeVRunAction::CreateNtuple()
 
     analysisManager->SetVerboseLevel(1);
 
-    G4String filename = "HVeV";
+    G4String filename = HVeVConfigManager::GetHitRootFile();
     analysisManager->OpenFile(filename);
 
     // Create ntuple

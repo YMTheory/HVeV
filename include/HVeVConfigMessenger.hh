@@ -18,6 +18,7 @@ class HVeVConfigMessenger : public G4UImessenger {
     private:
         HVeVConfigManager* theManager;
         G4UIcmdWithAString* hitsCmd;
+        G4UIcmdWithAString* hitsRootfileCmd;
         G4UIcmdWithADoubleAndUnit* voltageCmd;
         G4UIcmdWithAString* primaryParticleNameCmd;
         G4UIcmdWithADoubleAndUnit* primaryParticleEnergyCmd;

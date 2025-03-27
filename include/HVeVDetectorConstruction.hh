@@ -51,6 +51,7 @@ class HVeVDetectorConstruction : public G4VUserDetectorConstruction
         // Simulation parameters:
         G4double voltage;           // voltage across the silicon substrate
         G4String outputFileName;    // output hit filename
+        G4String outputRootFileName; 
 };
 
 #endif

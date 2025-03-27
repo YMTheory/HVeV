@@ -8,12 +8,16 @@ HVeVConfigMessenger::HVeVConfigMessenger(HVeVConfigManager* mgr)
     : G4UImessenger("/hvev/", "User configuration for HVeV example"),
     theManager(mgr)
     , hitsCmd(0)
+    , hitsRootfileCmd(0)
     , voltageCmd(0)
     , primaryParticleNameCmd(0)
     , primaryParticleEnergyCmd(0)
 {
     hitsCmd = CreateCommand<G4UIcmdWithAString>("HitsFile",
         "Set filename for output of phonon hit locations");
+    
+    hitsRootfileCmd = CreateCommand<G4UIcmdWithAString>("HitsRootFile",
+        "Set rootfile filename for output of phonon hits.");
     
     voltageCmd = CreateCommand<G4UIcmdWithADoubleAndUnit>("voltage",
         "Set voltage for uniform electric field");
@@ -28,6 +32,7 @@ HVeVConfigMessenger::HVeVConfigMessenger(HVeVConfigManager* mgr)
 
 HVeVConfigMessenger::~HVeVConfigMessenger() {
     delete hitsCmd; hitsCmd = 0;
+    delete hitsRootfileCmd; hitsRootfileCmd = 0;
     delete voltageCmd; voltageCmd = 0;
     delete primaryParticleNameCmd; primaryParticleNameCmd = 0;
     delete primaryParticleEnergyCmd; primaryParticleEnergyCmd = 0;
@@ -35,6 +40,8 @@ HVeVConfigMessenger::~HVeVConfigMessenger() {
 
 void HVeVConfigMessenger::SetNewValue(G4UIcommand* cmd, G4String value) {
     if (cmd == hitsCmd) theManager->SetHitOutput(value);
+
+    if (cmd == hitsRootfileCmd) theManager->SetHitRootFile(value);
 
     if (cmd == voltageCmd) theManager->SetVoltage(voltageCmd->GetNewDoubleValue(value));
 

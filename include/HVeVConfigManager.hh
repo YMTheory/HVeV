@@ -12,6 +12,7 @@ class HVeVConfigManager {
 
         // Getter
         static const G4String& GetHitOutput() { return Instance()->Hit_file; }
+        static const G4String& GetHitRootFile() { return Instance()->Hit_root_file; }
         static G4double GetVoltage() { return Instance()->voltage; }
         static const G4String& GetPrimaryParticleName() { return Instance()->PrimaryParticleName; }
         static G4double GetPrimaryParticleEnergy() { return Instance()->PrimaryParticleEnergy; }
@@ -19,6 +20,8 @@ class HVeVConfigManager {
         // Setter
         static void SetHitOutput(const G4String& name) 
             { Instance()->Hit_file = name; UpdateGeometry(); }
+        static void SetHitRootFile(const G4String& name) 
+            { Instance()->Hit_root_file = name; UpdateGeometry(); }
         static void SetVoltage(G4double value) 
             { Instance()->voltage = value; UpdateGeometry(); }
         static void SetPrimaryParticleName(const G4String& name) 
@@ -39,6 +42,7 @@ class HVeVConfigManager {
 
     private:
         G4String Hit_file;
+        G4String Hit_root_file;
         G4double voltage;
         // Primary charge pair configurations
         G4String PrimaryParticleName;
