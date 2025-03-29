@@ -1,4 +1,5 @@
 #include "HVeVTrackingAction.hh"
+#include "GlobalDataManager.hh"
 
 #include "G4Track.hh"
 #include "G4StepStatus.hh"
@@ -45,15 +46,45 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
 
     }
 
-    G4ParticleDefinition* particle = track->GetDefinition();
-    if(particle->GetParticleType() == "nucleus") {
-        G4double recoilEnergy = track->GetKineticEnergy();
-        if (recoilEnergy > 0) {
-            G4cout << "Nuclear recoil detected! Energy = " << recoilEnergy / eV << " eV" << G4endl;
+    int verboseLevel = fpTrackingManager->GetVerboseLevel();
+    if (verboseLevel > 0) {
+        /// Nuclear recoil debugging
+        G4ParticleDefinition* particle = track->GetDefinition();
+        if(particle->GetParticleName() == "Li7") {
+            G4double recoilEnergy = track->GetKineticEnergy();
+            if (recoilEnergy > 0) {
+                GlobalDataManager::GetInstance()->SetLi7TrackID(trackID);
+                G4cout << "Li7 Nuclear recoil detected! Energy = " << recoilEnergy / eV << " eV with track ID = " << trackID << G4endl;
+            }
+        }
+
+        if (particle->GetParticleType() == "phonon" and parentID == GlobalDataManager::GetInstance()->GetLi7RecoilTrackID())
+        {
+            GlobalDataManager::GetInstance()->AddOnePhonon();    
+            GlobalDataManager::GetInstance()->AddLi7RecoilPhononEnergy(energy);
+            G4cout << "Nuclear recoiled phonon " << trackID << " "
+                   << name << " "
+                   << energy << " eV "
+                   << pretrack_x << " "
+                   << pretrack_y << " "
+                   << pretrack_z << " mm"
+                   << G4endl;
+        }
+        if (particle->GetParticleType() == !"phonon" and parentID == GlobalDataManager::GetInstance()->GetLi7RecoilTrackID())
+        {
+            G4cout << "Nuclear recoiled non-phonon daughters: " << trackID << " "
+                   << name << " "
+                   << energy << " eV "
+                   << pretrack_x << " "
+                   << pretrack_y << " "
+                   << pretrack_z << " mm"
+                   << G4endl;
         }
     }
-
-    if (track->GetParentID() == 0 or track->GetParentID() == 1 or track->GetParentID() == 2) {
+    
+    // Set tracks to be visualized
+    if (trackID < 40) {
+    //if (track->GetParentID() == 0 or track->GetParentID() == 1 or track->GetParentID() == 2) {
         fpTrackingManager->SetStoreTrajectory(true);
     } else {
         fpTrackingManager->SetStoreTrajectory(false);
