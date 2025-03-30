@@ -35,13 +35,13 @@ void HVeVSensitivity::EndOfEvent(G4HCofThisEvent* HCE) {
   auto analysisManager = G4AnalysisManager::Instance();
 
   for (G4CMPElectrodeHit* hit : *hitVec) {
-      analysisManager->FillNtupleIColumn(0, runMan->GetCurrentEvent()->GetEventID());
-      analysisManager->FillNtupleIColumn(1, hit->GetTrackID());
-      analysisManager->FillNtupleDColumn(2, hit->GetFinalTime()/ns);
-      analysisManager->FillNtupleDColumn(3, hit->GetEnergyDeposit()/eV);
-      analysisManager->FillNtupleDColumn(4, hit->GetFinalPosition().getX()/mm);
-      analysisManager->FillNtupleDColumn(5, hit->GetFinalPosition().getY()/mm);
-      analysisManager->AddNtupleRow();
+      analysisManager->FillNtupleIColumn(1, 0, runMan->GetCurrentEvent()->GetEventID());
+      analysisManager->FillNtupleIColumn(1, 1, hit->GetTrackID());
+      analysisManager->FillNtupleDColumn(1, 2, hit->GetFinalTime()/ns);
+      analysisManager->FillNtupleDColumn(1, 3, hit->GetEnergyDeposit()/eV);
+      analysisManager->FillNtupleDColumn(1, 4, hit->GetFinalPosition().getX()/mm);
+      analysisManager->FillNtupleDColumn(1, 5, hit->GetFinalPosition().getY()/mm);
+      analysisManager->AddNtupleRow(1);
 
   }
 

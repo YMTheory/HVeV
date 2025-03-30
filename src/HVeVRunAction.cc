@@ -43,15 +43,49 @@ void HVeVRunAction::CreateNtuple()
     analysisManager->OpenFile(filename);
 
     // Create ntuple
+    analysisManager->SetFirstNtupleId(1);
     analysisManager->CreateNtuple("Hits", "Hit information");
-    analysisManager->CreateNtupleIColumn("eventid");
-    analysisManager->CreateNtupleIColumn("trackid");
-    analysisManager->CreateNtupleDColumn("hittime");
-    analysisManager->CreateNtupleDColumn("Edep");
-    analysisManager->CreateNtupleDColumn("x");
-    analysisManager->CreateNtupleDColumn("y");
+    analysisManager->CreateNtupleIColumn(1, "eventid");
+    analysisManager->CreateNtupleIColumn(1, "trackid");
+    analysisManager->CreateNtupleDColumn(1, "hittime");
+    analysisManager->CreateNtupleDColumn(1, "Edep");
+    analysisManager->CreateNtupleDColumn(1, "x");
+    analysisManager->CreateNtupleDColumn(1, "y");
+    analysisManager->FinishNtuple(1);
 
-    analysisManager->FinishNtuple();
+    analysisManager->CreateNtuple("PrimaryPhonon", "Primary phonon information");
+    analysisManager->CreateNtupleIColumn(2, "eventid");
+    analysisManager->CreateNtupleIColumn(2, "trackid");
+    analysisManager->CreateNtupleIColumn(2, "parentid");
+    analysisManager->CreateNtupleIColumn(2, "parentpdg");
+    analysisManager->CreateNtupleDColumn(2, "energy");
+    analysisManager->CreateNtupleDColumn(2, "startx");
+    analysisManager->CreateNtupleDColumn(2, "starty");
+    analysisManager->CreateNtupleDColumn(2, "startz");
+    analysisManager->FinishNtuple(2);
+
+    analysisManager->CreateNtuple("PrimaryCharge", "Primary charge pair information");
+    analysisManager->CreateNtupleIColumn(3, "eventid");
+    analysisManager->CreateNtupleIColumn(3, "trackid");
+    analysisManager->CreateNtupleIColumn(3, "parentid");
+    analysisManager->CreateNtupleIColumn(3, "parentpdg");
+    analysisManager->CreateNtupleDColumn(3, "energy");
+    analysisManager->CreateNtupleDColumn(3, "startx");
+    analysisManager->CreateNtupleDColumn(3, "starty");
+    analysisManager->CreateNtupleDColumn(3, "startz");
+    analysisManager->FinishNtuple(3);
+
+    analysisManager->CreateNtuple("LukePhonon", "Luke phonon information");
+    analysisManager->CreateNtupleIColumn(4, "eventid");
+    analysisManager->CreateNtupleIColumn(4, "trackid");
+    analysisManager->CreateNtupleIColumn(4, "parentid");
+    analysisManager->CreateNtupleIColumn(4, "parentpdg");
+    analysisManager->CreateNtupleDColumn(4, "energy");
+    analysisManager->CreateNtupleDColumn(4, "startx");
+    analysisManager->CreateNtupleDColumn(4, "starty");
+    analysisManager->CreateNtupleDColumn(4, "startz");
+    analysisManager->FinishNtuple(4);
+
 }
 
 void HVeVRunAction::WriteNtuple()
