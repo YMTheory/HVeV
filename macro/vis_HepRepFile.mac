@@ -31,30 +31,30 @@
 
 #/hvev/PrimaryParticleName chargepair
 #/hvev/PrimaryParticleEnergy 0.001 eV
-/hvev/voltage 10 volt
+/hvev/voltage 100 volt
 
 #/g4cmp/sampleLuke 0.001
 
 /run/initialize
 
 #G4CMP Settings
-/g4cmp/producePhonons 1
-/g4cmp/produceCharges 1
-/g4cmp/sampleLuke 0.01
-
-/hvev/PrimaryParticleName Be7
+/g4cmp/producePhonons 0.1
+/g4cmp/produceCharges 0.1
+/g4cmp/sampleLuke 0.1
 
 # Particle generation
-/gps/number 1
-#/gps/particle gamma
-#/gps/pos/type Point
-#/gps/direction 0 -4 -1
-/gps/pos/centre 0.0 0.0 1.999 mm # A bit above the chip top
-#/gps/pos/centre 0.0 0.1 0.481 cm # halfway between bottom and top of chip (Top of chip is 0.5cm)
-/gps/ene/type Mono
-/gps/energy 0. eV
-/run/beamOn 1
+#### Gamma interaction
+#/gps/number 1
+##/gps/particle gamma
+##/gps/pos/type Point
+##/gps/direction 0 -4 -1
+#/gps/pos/centre 0.0 0.0 1.999 mm # A bit above the chip top
+##/gps/pos/centre 0.0 0.1 0.481 cm # halfway between bottom and top of chip (Top of chip is 0.5cm)
+#/gps/ene/type Mono
+#/gps/energy 0. eV
+#/run/beamOn 1
 
+### Phonon interaction
 #/gps/particle G4CMPDriftElectron
 #/gps/particle phononL
 #/gps/pos/type Point
@@ -62,7 +62,13 @@
 #/gps/ene/type Mono
 #/gps/ene/mono 0.1 eV
 
+### Be7 interaction
+/hvev/PrimaryParticleName Be7
 
-#/run/beamOn 1
+/gps/number 1
+/gps/pos/centre 0. 0. 0. mm
+/run/beamOn 1
+
+#/run/beamOn 10
 /vis/viewer/flush
 

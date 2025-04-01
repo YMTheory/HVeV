@@ -7,6 +7,7 @@
 #include "G4PhononTransFast.hh"
 #include "G4PhononTransSlow.hh"
 #include "G4PhononLong.hh"
+#include "G4Electron.hh"
 #include "G4CMPDriftElectron.hh"
 #include "G4CMPDriftHole.hh"
 #include "G4SystemOfUnits.hh"
@@ -60,10 +61,37 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     
     }
 
-    else if (f_primaryParticleName == "Be7") {
+    else if (f_primaryParticleName == "Be7_G4") {
+        // Somehow there is no hit when I use G4GeneralParticleSource to generate Be7.
         G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(4, 7, 0); // Z=4, A=7
         fParticleGPS->SetParticleDefinition(ion);
         fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GeneratePrimaryVertex(anEvent);
+
+    }
+    else if (f_primaryParticleName == "Be7") {
+
+        // K-shell ground state Be-7 electron capture
+        G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(3, 7, 0); // Z=4, A=7
+        fParticleGPS->SetParticleDefinition(ion);
+        fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(56.83 * eV);
+        fParticleGPS->GeneratePrimaryVertex(anEvent);
+
+        fParticleGPS->SetParticleDefinition(G4Electron::Definition());
+        fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(60.63 * eV);
+        fParticleGPS->GeneratePrimaryVertex(anEvent);
+    }
+
+    else if (f_primaryParticleName == "Li7") {
+        G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(3, 7, 0); // Z=4, A=7
+        fParticleGPS->SetParticleDefinition(ion);
+        fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(56.83 * eV);
         fParticleGPS->GeneratePrimaryVertex(anEvent);
     }
 

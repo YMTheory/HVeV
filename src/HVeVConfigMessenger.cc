@@ -2,6 +2,7 @@
 #include "HVeVConfigManager.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
+#include "G4UIcmdWithABool.hh"
 #include "G4SystemOfUnits.hh"
 
 HVeVConfigMessenger::HVeVConfigMessenger(HVeVConfigManager* mgr)
@@ -12,6 +13,7 @@ HVeVConfigMessenger::HVeVConfigMessenger(HVeVConfigManager* mgr)
     , voltageCmd(0)
     , primaryParticleNameCmd(0)
     , primaryParticleEnergyCmd(0)
+    , primariesFlagCmd(0)
 {
     hitsCmd = CreateCommand<G4UIcmdWithAString>("HitsFile",
         "Set filename for output of phonon hit locations");
@@ -28,6 +30,9 @@ HVeVConfigMessenger::HVeVConfigMessenger(HVeVConfigManager* mgr)
     
     primaryParticleEnergyCmd = CreateCommand<G4UIcmdWithADoubleAndUnit>("PrimaryParticleEnergy",
         "Set energy of primary particle");
+
+    primariesFlagCmd = CreateCommand<G4UIcmdWithABool>("PrimariesFlag",
+        "Set flag for primary particle information saving.");
 }
 
 HVeVConfigMessenger::~HVeVConfigMessenger() {
@@ -36,6 +41,7 @@ HVeVConfigMessenger::~HVeVConfigMessenger() {
     delete voltageCmd; voltageCmd = 0;
     delete primaryParticleNameCmd; primaryParticleNameCmd = 0;
     delete primaryParticleEnergyCmd; primaryParticleEnergyCmd = 0;
+    delete primariesFlagCmd; primariesFlagCmd = 0;
 }
 
 void HVeVConfigMessenger::SetNewValue(G4UIcommand* cmd, G4String value) {
@@ -48,4 +54,6 @@ void HVeVConfigMessenger::SetNewValue(G4UIcommand* cmd, G4String value) {
     if (cmd == primaryParticleNameCmd) theManager->SetPrimaryParticleName(value);
 
     if (cmd == primaryParticleEnergyCmd) theManager->SetPrimaryParticleEnergy(primaryParticleEnergyCmd->GetNewDoubleValue(value)/eV);
+
+    if (cmd == primariesFlagCmd) theManager->SetPrimariesFlag(primariesFlagCmd->GetNewBoolValue(value));
 }

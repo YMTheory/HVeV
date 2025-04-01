@@ -1,7 +1,9 @@
 #include "HVeVSteppingAction.hh"
+#include "HVeVConfigManager.hh"
 
 #include "G4Step.hh"
 #include "G4Track.hh"
+#include "G4VProcess.hh"
 #include "G4SystemOfUnits.hh"
 #include "HVeVAnalysis.hh"
 #include "G4RunManager.hh"
@@ -42,36 +44,41 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                     G4String secName = secondary->GetParticleDefinition()->GetParticleName();
                     if (secName == "G4CMPDriftElectron" or secName == "G4CMPDriftHole") { 
                         total_energy_charge_pair += secEkin;
-                        G4double x = secondary->GetPosition().x()/mm;
-                        G4double y = secondary->GetPosition().y()/mm;
-                        G4double z = secondary->GetPosition().z()/mm;
+    
+                        if (HVeVConfigManager::Instance()->GetPrimariesFlag()) {
+                            G4double x = secondary->GetPosition().x()/mm;
+                            G4double y = secondary->GetPosition().y()/mm;
+                            G4double z = secondary->GetPosition().z()/mm;
 
-                        analysisManager->FillNtupleIColumn(3, 0, runMan->GetCurrentEvent()->GetEventID());
-                        analysisManager->FillNtupleIColumn(3, 1, secID);
-                        analysisManager->FillNtupleIColumn(3, 2, trackID);
-                        analysisManager->FillNtupleIColumn(3, 3, pdgCode);
-                        analysisManager->FillNtupleDColumn(3, 4, secEkin);
-                        analysisManager->FillNtupleDColumn(3, 5, x);
-                        analysisManager->FillNtupleDColumn(3, 6, y);
-                        analysisManager->FillNtupleDColumn(3, 7, z);
-                        analysisManager->AddNtupleRow(3);
+                            analysisManager->FillNtupleIColumn(3, 0, runMan->GetCurrentEvent()->GetEventID());
+                            analysisManager->FillNtupleIColumn(3, 1, secID);
+                            analysisManager->FillNtupleIColumn(3, 2, trackID);
+                            analysisManager->FillNtupleIColumn(3, 3, pdgCode);
+                            analysisManager->FillNtupleDColumn(3, 4, secEkin);
+                            analysisManager->FillNtupleDColumn(3, 5, x);
+                            analysisManager->FillNtupleDColumn(3, 6, y);
+                            analysisManager->FillNtupleDColumn(3, 7, z);
+                            analysisManager->AddNtupleRow(3);
+                        }
                     }
                     else if (secName == "phononL" or secName == "phononTS" or secName == "phononTF") {
                         total_energy_phonon += secEkin;
 
-                        G4double x = secondary->GetPosition().x()/mm;
-                        G4double y = secondary->GetPosition().y()/mm;
-                        G4double z = secondary->GetPosition().z()/mm;
+                        if (HVeVConfigManager::Instance()->GetPrimariesFlag()) {
+                            G4double x = secondary->GetPosition().x()/mm;
+                            G4double y = secondary->GetPosition().y()/mm;
+                            G4double z = secondary->GetPosition().z()/mm;
 
-                        analysisManager->FillNtupleIColumn(2, 0, runMan->GetCurrentEvent()->GetEventID());
-                        analysisManager->FillNtupleIColumn(2, 1, secID);
-                        analysisManager->FillNtupleIColumn(2, 2, trackID);
-                        analysisManager->FillNtupleIColumn(2, 3, pdgCode);
-                        analysisManager->FillNtupleDColumn(2, 4, secEkin);
-                        analysisManager->FillNtupleDColumn(2, 5, x);
-                        analysisManager->FillNtupleDColumn(2, 6, y);
-                        analysisManager->FillNtupleDColumn(2, 7, z);
-                        analysisManager->AddNtupleRow(2);
+                            analysisManager->FillNtupleIColumn(2, 0, runMan->GetCurrentEvent()->GetEventID());
+                            analysisManager->FillNtupleIColumn(2, 1, secID);
+                            analysisManager->FillNtupleIColumn(2, 2, trackID);
+                            analysisManager->FillNtupleIColumn(2, 3, pdgCode);
+                            analysisManager->FillNtupleDColumn(2, 4, secEkin);
+                            analysisManager->FillNtupleDColumn(2, 5, x);
+                            analysisManager->FillNtupleDColumn(2, 6, y);
+                            analysisManager->FillNtupleDColumn(2, 7, z);
+                            analysisManager->AddNtupleRow(2);
+                        }
 
                     }
                     else {
@@ -85,28 +92,33 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                    << "Others: " << total_energy_others << " eV\n" << G4endl;
         }
 
-        if (particleName == "G4CMPDriftElectron" or particleName == "G4CMPDriftHole") {
-                for (auto secondary : *secondaries) {
-                    G4int secID = secondary->GetTrackID();
-                    G4double secEkin = secondary->GetKineticEnergy()/eV;
-                    G4String secName = secondary->GetParticleDefinition()->GetParticleName();
-                    G4double x = secondary->GetPosition().x()/mm;
-                    G4double y = secondary->GetPosition().y()/mm;
-                    G4double z = secondary->GetPosition().z()/mm;
+        if (HVeVConfigManager::Instance()->GetPrimariesFlag()) {
+            for (auto secondary : *secondaries) {
+                G4int secID = secondary->GetTrackID();
+                G4double secEkin = secondary->GetKineticEnergy()/eV;
+                G4String secName = secondary->GetParticleDefinition()->GetParticleName();
+                G4double x = secondary->GetPosition().x()/mm;
+                G4double y = secondary->GetPosition().y()/mm;
+                G4double z = secondary->GetPosition().z()/mm;
+                G4double t = secondary->GetGlobalTime()/ns;
+                const  G4VProcess* creator = track->GetCreatorProcess();
 
-                    if (secName == "phononL" or secName == "phononTS" or secName == "phononTF")
-                    {
+                if (creator)
+                {
+                    if (creator->GetProcessName() == "G4CMPLukeScattering") {
                         analysisManager->FillNtupleIColumn(4, 0, runMan->GetCurrentEvent()->GetEventID());
                         analysisManager->FillNtupleIColumn(4, 1, secID);
                         analysisManager->FillNtupleIColumn(4, 2, trackID);
                         analysisManager->FillNtupleIColumn(4, 3, pdgCode);
                         analysisManager->FillNtupleDColumn(4, 4, secEkin);
-                        analysisManager->FillNtupleDColumn(4, 5, x);                        
-                        analysisManager->FillNtupleDColumn(4, 6, y);                        
-                        analysisManager->FillNtupleDColumn(4, 7, z);                        
+                        analysisManager->FillNtupleDColumn(4, 5, t);
+                        analysisManager->FillNtupleDColumn(4, 6, x);                        
+                        analysisManager->FillNtupleDColumn(4, 7, y);                        
+                        analysisManager->FillNtupleDColumn(4, 8, z);                        
                         analysisManager->AddNtupleRow(4);
                     }
                 }
+            }
         }
     }
 }

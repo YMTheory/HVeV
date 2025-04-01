@@ -16,6 +16,7 @@ class HVeVConfigManager {
         static G4double GetVoltage() { return Instance()->voltage; }
         static const G4String& GetPrimaryParticleName() { return Instance()->PrimaryParticleName; }
         static G4double GetPrimaryParticleEnergy() { return Instance()->PrimaryParticleEnergy; }
+        static G4bool GetPrimariesFlag() { return Instance()->primaries_flag; }
 
         // Setter
         static void SetHitOutput(const G4String& name) 
@@ -28,6 +29,8 @@ class HVeVConfigManager {
             { Instance()->PrimaryParticleName = name; UpdateGeometry(); }
         static void SetPrimaryParticleEnergy(G4double value) 
             { Instance()->PrimaryParticleEnergy = value; UpdateGeometry(); }
+        static void SetPrimariesFlag(G4bool flag) 
+            { Instance()->primaries_flag = flag; UpdateGeometry(); }
 
         static void UpdateGeometry();
 
@@ -47,6 +50,9 @@ class HVeVConfigManager {
         // Primary charge pair configurations
         G4String PrimaryParticleName;
         G4double PrimaryParticleEnergy;
+
+        // If store primaries information in the event
+        G4bool primaries_flag;
 
         HVeVConfigMessenger* messenger;
 

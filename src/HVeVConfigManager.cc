@@ -17,6 +17,7 @@ HVeVConfigManager::HVeVConfigManager()
     voltage(getenv("HVeV_VOLTAGE")?strtod(getenv("HVeV_VOLTAGE"),0)*volt:0.),
     PrimaryParticleName(getenv("HVeV_PRIMARY_PARTICLE_NAME")?getenv("HVeV_PRIMARY_PARTICLE_NAME"):"e-"),
     PrimaryParticleEnergy(getenv("HVeV_PRIMARY_PARTICLE_ENERGY")?strtod(getenv("HVeV_PRIMARY_PARTICLE_ENERGY"),0)*eV:1.*eV),
+    primaries_flag(getenv("HVeV_PRIMARY_PARTICLES_FLAG")?strtod(getenv("HVeV_PRIMARY_PARTICLES_FLAG"),0):0),
     messenger(new HVeVConfigMessenger(this)) {;}
 
 HVeVConfigManager::~HVeVConfigManager() {
