@@ -69,7 +69,7 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         fParticleGPS->GeneratePrimaryVertex(anEvent);
 
     }
-    else if (f_primaryParticleName == "Be7") {
+    else if (f_primaryParticleName == "Be7_KEC_ground") {
 
         // K-shell ground state Be-7 electron capture
         G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(3, 7, 0); // Z=4, A=7
@@ -82,8 +82,19 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         fParticleGPS->SetParticleDefinition(G4Electron::Definition());
         fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
-        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(60.63 * eV);
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(54 * eV);
         fParticleGPS->GeneratePrimaryVertex(anEvent);
+    }
+
+    else if (f_primaryParticleName == "Be7_LEC_ground") {
+        // L-shell ground state Be-7 electron capture
+        G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(3, 7, 0); // Z=4, A=7
+        fParticleGPS->SetParticleDefinition(ion);
+        fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(56.83 * eV);
+        fParticleGPS->GeneratePrimaryVertex(anEvent);
+
     }
 
     else if (f_primaryParticleName == "Li7") {
