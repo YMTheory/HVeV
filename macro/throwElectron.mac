@@ -3,7 +3,7 @@
 /random/setSeeds 111 9000
 
 /hvev/voltage 100 volt
-/hvev/HitsRootFile test_electron
+/hvev/HitsRootFile test_electron_1umAboveBottom
 
 /run/initialize
 
@@ -16,9 +16,9 @@
 /gps/particle e-
 /gps/pos/type Point
 /gps/ang/type iso
-/gps/pos/centre 0.0 0.0 0.0 mm # A bit below the chip top surface
+/gps/pos/centre 0.0 0.0 -1.909 mm # A bit below the chip top surface
 #/gps/pos/centre 0.0 0.1 0.481 cm # halfway between bottom and top of chip (Top of chip is 0.5cm)
 /gps/ene/type Mono
-/gps/energy 60 eV
+/gps/energy 10 eV
 /run/beamOn 1
 
