@@ -1,5 +1,6 @@
 /tracking/verbose 2
 
+/g4cmp/NIELPartition impact
 /run/initialize
 /g4cmp/phononBounces 10000
 /g4cmp/produceCharges 1.0 

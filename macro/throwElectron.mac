@@ -2,6 +2,8 @@
 
 /random/setSeeds 111 9000
 
+/g4cmp/NIELPartition impact
+
 /hvev/voltage 100 volt
 /hvev/HitsRootFile test_electron_1umAboveBottom
 
