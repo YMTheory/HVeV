@@ -7,6 +7,7 @@
 #include "G4UnitsTable.hh"
 
 #include "HVeVConfigManager.hh"
+#include "G4CMPConfigManager.hh"
 
 HVeVRunAction::HVeVRunAction()
 : G4UserRunAction()
@@ -21,6 +22,9 @@ void HVeVRunAction::BeginOfRunAction(const G4Run* run)
 {
     CreateNtuple();
     PrintRunInfo(run);
+
+    G4CMPConfigManager* cmpConfigManager = G4CMPConfigManager::Instance();
+    cmpConfigManager->printConfig(std::cout);
 }
 
 

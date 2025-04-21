@@ -30,6 +30,9 @@
 #include "G4CMPMeshElectricField.hh"
 #include "G4UniformElectricField.hh"
 
+#include "G4CMPConfigManager.hh"
+#include "G4VNIELPartition.hh"
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
@@ -117,7 +120,10 @@ void HVeVDetectorConstruction::SetupGeometry()
     G4LatticePhysical* SiPhysical = new G4LatticePhysical(SiLogical);
     SiPhysical->SetMillerOrientation(1, 0, 0);
     LM->RegisterLattice(SiPhys, SiPhysical);
-    
+
+    G4CMPConfigManager* config_manager = G4CMPConfigManager::Instance();
+    const G4VNIELPartition* nielPartition = config_manager->GetNIELPartition(); 
+    //for (int i=1; i<101; i++) {}
     // Set up the aluminum superconducting thin films
     G4VSolid* fAluminumSolid = new G4Box("aluminiumSolid",
                                         dp_aluminumFilmDimX/2.,
