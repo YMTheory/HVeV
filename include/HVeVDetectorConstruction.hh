@@ -46,6 +46,11 @@ class HVeVDetectorConstruction : public G4VUserDetectorConstruction
         G4double dp_aluminumFilmDimY = dp_siliconChipDimY;
         G4double dp_aluminumFilmDimZ = 100 * CLHEP::nm;
 
+        // Geometry of two aluminum superconducting readout channels on the top surface
+        // The two Al readout channels have the same coverage areas
+        G4double dp_aluminumInnerTopFilmDimX = dp_siliconChipDimX * 0.7071;
+        G4double dp_aluminumInnerTopFilmDimY = dp_siliconChipDimY * 0.7071;
+
         G4bool fConstructed;
         G4ElectricField* fEMField;
         // Simulation parameters:

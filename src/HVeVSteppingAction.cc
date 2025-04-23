@@ -7,6 +7,7 @@
 #include "G4SystemOfUnits.hh"
 #include "HVeVAnalysis.hh"
 #include "G4RunManager.hh"
+#include "G4VPhysicalVolume.hh"
 
 HVeVSteppingAction::HVeVSteppingAction()
 {}
@@ -120,5 +121,13 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                 }
             }
         }
+
     }
+
+    ///// Below is for testing, I found that no phonon that arrives at the Al films deposit energy in it.
+    //G4String targetVolumeName = "fAluminumPhysical";
+    //G4VPhysicalVolume* volume = step->GetPreStepPoint()->GetPhysicalVolume();
+    //if (volume->GetName() == targetVolumeName) {
+    //    G4cout << "Track arriving at the Al films: " << trackID << " " << particleName << " " << step->GetNonIonizingEnergyDeposit() << G4endl;
+    //}
 }

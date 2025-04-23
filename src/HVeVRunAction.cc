@@ -48,7 +48,7 @@ void HVeVRunAction::CreateNtuple()
 
     // Create ntuple
     analysisManager->SetFirstNtupleId(1);
-    analysisManager->CreateNtuple("Hits", "Hit information");
+    analysisManager->CreateNtuple("InnerHits", "Inner channel hit information");
     analysisManager->CreateNtupleIColumn(1, "eventid");
     analysisManager->CreateNtupleIColumn(1, "trackid");
     analysisManager->CreateNtupleDColumn(1, "hittime");
@@ -57,20 +57,18 @@ void HVeVRunAction::CreateNtuple()
     analysisManager->CreateNtupleDColumn(1, "y");
     analysisManager->FinishNtuple(1);
 
+    analysisManager->CreateNtuple("OuterHits", "Outer channel hit information");
+    analysisManager->CreateNtupleIColumn(2, "eventid");
+    analysisManager->CreateNtupleIColumn(2, "trackid");
+    analysisManager->CreateNtupleDColumn(2, "hittime");
+    analysisManager->CreateNtupleDColumn(2, "Edep");
+    analysisManager->CreateNtupleDColumn(2, "x");
+    analysisManager->CreateNtupleDColumn(2, "y");
+    analysisManager->FinishNtuple(2);
+
     G4bool primariesFlag = HVeVConfigManager::GetPrimariesFlag();
     if (primariesFlag) {
         analysisManager->CreateNtuple("PrimaryPhonon", "Primary phonon information");
-        analysisManager->CreateNtupleIColumn(2, "eventid");
-        analysisManager->CreateNtupleIColumn(2, "trackid");
-        analysisManager->CreateNtupleIColumn(2, "parentid");
-        analysisManager->CreateNtupleIColumn(2, "parentpdg");
-        analysisManager->CreateNtupleDColumn(2, "energy");
-        analysisManager->CreateNtupleDColumn(2, "startx");
-        analysisManager->CreateNtupleDColumn(2, "starty");
-        analysisManager->CreateNtupleDColumn(2, "startz");
-        analysisManager->FinishNtuple(2);
-
-        analysisManager->CreateNtuple("PrimaryCharge", "Primary charge pair information");
         analysisManager->CreateNtupleIColumn(3, "eventid");
         analysisManager->CreateNtupleIColumn(3, "trackid");
         analysisManager->CreateNtupleIColumn(3, "parentid");
@@ -81,31 +79,42 @@ void HVeVRunAction::CreateNtuple()
         analysisManager->CreateNtupleDColumn(3, "startz");
         analysisManager->FinishNtuple(3);
 
-        analysisManager->CreateNtuple("LukePhonon", "Luke phonon information");
+        analysisManager->CreateNtuple("PrimaryCharge", "Primary charge pair information");
         analysisManager->CreateNtupleIColumn(4, "eventid");
         analysisManager->CreateNtupleIColumn(4, "trackid");
         analysisManager->CreateNtupleIColumn(4, "parentid");
         analysisManager->CreateNtupleIColumn(4, "parentpdg");
         analysisManager->CreateNtupleDColumn(4, "energy");
-        analysisManager->CreateNtupleDColumn(4, "starttime");
         analysisManager->CreateNtupleDColumn(4, "startx");
         analysisManager->CreateNtupleDColumn(4, "starty");
         analysisManager->CreateNtupleDColumn(4, "startz");
         analysisManager->FinishNtuple(4);
 
-        analysisManager->CreateNtuple("Primaries", "Primary information");
+        analysisManager->CreateNtuple("LukePhonon", "Luke phonon information");
         analysisManager->CreateNtupleIColumn(5, "eventid");
         analysisManager->CreateNtupleIColumn(5, "trackid");
-        analysisManager->CreateNtupleIColumn(5, "pdgcode");
         analysisManager->CreateNtupleIColumn(5, "parentid");
+        analysisManager->CreateNtupleIColumn(5, "parentpdg");
         analysisManager->CreateNtupleDColumn(5, "energy");
+        analysisManager->CreateNtupleDColumn(5, "starttime");
         analysisManager->CreateNtupleDColumn(5, "startx");
         analysisManager->CreateNtupleDColumn(5, "starty");
         analysisManager->CreateNtupleDColumn(5, "startz");
-        analysisManager->CreateNtupleDColumn(5, "endx");
-        analysisManager->CreateNtupleDColumn(5, "endy");
-        analysisManager->CreateNtupleDColumn(5, "endz");
         analysisManager->FinishNtuple(5);
+
+        analysisManager->CreateNtuple("Primaries", "Primary information");
+        analysisManager->CreateNtupleIColumn(6, "eventid");
+        analysisManager->CreateNtupleIColumn(6, "trackid");
+        analysisManager->CreateNtupleIColumn(6, "pdgcode");
+        analysisManager->CreateNtupleIColumn(6, "parentid");
+        analysisManager->CreateNtupleDColumn(6, "energy");
+        analysisManager->CreateNtupleDColumn(6, "startx");
+        analysisManager->CreateNtupleDColumn(6, "starty");
+        analysisManager->CreateNtupleDColumn(6, "startz");
+        analysisManager->CreateNtupleDColumn(6, "endx");
+        analysisManager->CreateNtupleDColumn(6, "endy");
+        analysisManager->CreateNtupleDColumn(6, "endz");
+        analysisManager->FinishNtuple(6);
     }
 
 }
