@@ -50,6 +50,7 @@ set(hvev_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVEventAction.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVTrackingAction.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVSteppingAction.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVHit.cc
     )
     
 if(USE_GEANT4_STATIC_LIBS)
