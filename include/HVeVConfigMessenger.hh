@@ -24,6 +24,7 @@ class HVeVConfigMessenger : public G4UImessenger {
         G4UIcmdWithAString* primaryParticleNameCmd;
         G4UIcmdWithADoubleAndUnit* primaryParticleEnergyCmd;
         G4UIcmdWithABool* primariesFlagCmd;
+        G4UIcmdWithABool* bottomSurfaceHitsFlagCmd;
 
     private:
         HVeVConfigMessenger(const HVeVConfigMessenger&); // Copying is forbidden

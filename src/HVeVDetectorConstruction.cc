@@ -127,13 +127,19 @@ void HVeVDetectorConstruction::SetupGeometry()
     //for (int i=1; i<101; i++) {}
     // Set up the aluminum superconducting thin films
     /// Below is the first try, where I simplified it as a whole film covering the whole top/bottom surface.
-    G4VSolid* fAluminumSolid = new G4Box("aluminiumSolid",
-                                        dp_aluminumFilmDimX/2.,
-                                        dp_aluminumFilmDimY/2.,
-                                        dp_aluminumFilmDimZ/2.
+    G4VSolid* fAluminumTopSolid = new G4Box("aluminumTopSolid",
+                                            dp_aluminumFilmDimX/2.,
+                                            dp_aluminumFilmDimY/2.,
+                                            dp_aluminumTopFilmDimZ/2.
                                     );
-    G4LogicalVolume* fAluminumLogical =
-        new G4LogicalVolume(fAluminumSolid, fAluminum, "fAluminumLogical");
+
+    G4VSolid* fAluminumBottomSolid = new G4Box("aluminumBottomSolid",
+                                                dp_aluminumFilmDimX/2.,
+                                                dp_aluminumFilmDimY/2.,
+                                                dp_aluminumBottomFilmDimZ/2.
+                                            );
+    G4LogicalVolume* fAluminumBottomLogical =
+        new G4LogicalVolume(fAluminumBottomSolid, fAluminum, "fAluminumBottomLogical");
     //G4VPhysicalVolume* aluminumTopPhysical = new G4PVPlacement(0,
     //                                                        G4ThreeVector(0., 0., (dp_siliconChipDimZ+dp_aluminumFilmDimZ)/2.),
     //                                                        fAluminumLogical,
@@ -142,9 +148,9 @@ void HVeVDetectorConstruction::SetupGeometry()
     //                                                        false,
     //                                                        0);
     G4VPhysicalVolume* aluminumBotPhysical = new G4PVPlacement(0,
-                                                            G4ThreeVector(0., 0., -(dp_siliconChipDimZ+dp_aluminumFilmDimZ)/2.),
-                                                            fAluminumLogical,
-                                                            "fAluminumPhysical",
+                                                            G4ThreeVector(0., 0., -(dp_siliconChipDimZ+dp_aluminumBottomFilmDimZ)/2.),
+                                                            fAluminumBottomLogical,
+                                                            "fAluminumBottomPhysical",
                                                             worldLogical,
                                                             false,
                                                             1);
@@ -153,13 +159,13 @@ void HVeVDetectorConstruction::SetupGeometry()
     G4VSolid* fAluminumInnerTopSolid = new G4Box( "aluminumInnerTopSolid",
                                                   dp_aluminumInnerTopFilmDimX/2.,
                                                   dp_aluminumInnerTopFilmDimY/2.,
-                                                  dp_aluminumFilmDimZ/2.
+                                                  dp_aluminumTopFilmDimZ/2.
                                                 );
     G4LogicalVolume* fAluminumInnerTopLogical = 
                     new G4LogicalVolume(fAluminumInnerTopSolid, fAluminum, "fAluminumInnerTopLogical");
     
     G4VPhysicalVolume* aluminumInnerTopPhysical = new G4PVPlacement( 0, 
-                                                                    G4ThreeVector(0., 0., (dp_siliconChipDimZ + dp_aluminumFilmDimZ)/2.), 
+                                                                    G4ThreeVector(0., 0., (dp_siliconChipDimZ + dp_aluminumTopFilmDimZ)/2.), 
                                                                     fAluminumInnerTopLogical,
                                                                     "fAluminumInnerTopPhysical",
                                                                     worldLogical,
@@ -167,13 +173,13 @@ void HVeVDetectorConstruction::SetupGeometry()
                                                                     0
                                                                   );
     G4SubtractionSolid* fAluminumOuterTopSolid = new G4SubtractionSolid( "aluminumOuterTopSolid",
-                                                                         fAluminumSolid,
+                                                                         fAluminumTopSolid,
                                                                          fAluminumInnerTopSolid
                                                                         );
     G4LogicalVolume* fAluminumOuterTopLogical = 
                     new G4LogicalVolume(fAluminumOuterTopSolid, fAluminum, "fAluminumOuterTopLogical");
     G4VPhysicalVolume* aluminumOuterTopPhysical = new G4PVPlacement( 0, 
-                                                                    G4ThreeVector(0., 0., (dp_siliconChipDimZ + dp_aluminumFilmDimZ)/2.), 
+                                                                    G4ThreeVector(0., 0., (dp_siliconChipDimZ + dp_aluminumTopFilmDimZ)/2.), 
                                                                     fAluminumOuterTopLogical,
                                                                     "fAluminumOuterTopPhysical",
                                                                     worldLogical,
@@ -213,7 +219,8 @@ void HVeVDetectorConstruction::SetupGeometry()
     					   	        0.3, 1.0, 0.0, 0.0);
         botSurfProp->AddScatteringProperties(anhCutoff, reflCutoff, anhCoeffs,
     					 diffCoeffs, specCoeffs, GHz, GHz, GHz);
-        AttachPhononSensor(botSurfProp);
+        //AttachPhononSensor(botSurfProp);
+        AttachGrid(botSurfProp);
 
         wallSurfProp = new G4CMPSurfaceProperty("WallSurf", 0.0, 1.0, 0.0, 0.0,
     					    	          0.0, 1.0, 0.0, 0.0);
@@ -241,7 +248,9 @@ void HVeVDetectorConstruction::SetupGeometry()
     G4VisAttributes* simpleBoxVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
     simpleBoxVisAtt->SetVisibility(true);
     fSiliconLogical->SetVisAttributes(simpleBoxVisAtt);
-    fAluminumLogical->SetVisAttributes(simpleBoxVisAtt);
+    fAluminumInnerTopLogical->SetVisAttributes(simpleBoxVisAtt);
+    fAluminumOuterTopLogical->SetVisAttributes(simpleBoxVisAtt);
+    fAluminumBottomLogical->SetVisAttributes(simpleBoxVisAtt);
 }
 
 void HVeVDetectorConstruction::
@@ -263,6 +272,27 @@ AttachPhononSensor(G4CMPSurfaceProperty* surfProp)
     surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
     // TEST if the electrode object is attached
     G4CMPVElectrodePattern* electrode = surfProp->GetPhononElectrode();
+}
+
+void HVeVDetectorConstruction::
+AttachGrid(G4CMPSurfaceProperty* surfProp)
+{
+    if (!surfProp) return;
+    auto sensorProp = surfProp->GetPhononMaterialPropertiesTablePointer();
+    sensorProp->AddConstProperty("filmAbsorption", 0.20);    // True sensor area
+    sensorProp->AddConstProperty("filmThickness", 30.*nm);
+    sensorProp->AddConstProperty("gapEnergy", 173.715e-6*eV);
+    sensorProp->AddConstProperty("lowQPLimit", 3.);
+    sensorProp->AddConstProperty("phononLifetime", 242.*ps);
+    sensorProp->AddConstProperty("phononLifetimeSlope", 0.29);
+    sensorProp->AddConstProperty("vSound", 3.26*km/s);
+    sensorProp->AddConstProperty("subgapAbsorption", 0.1);
+
+    // Attach electrode object to handle KaplanQP interface
+    surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
+    // TEST if the electrode object is attached
+    G4CMPVElectrodePattern* electrode = surfProp->GetPhononElectrode();
+
 }
 
 void HVeVDetectorConstruction::AttachField(G4LogicalVolume* lv)

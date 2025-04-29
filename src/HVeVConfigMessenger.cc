@@ -14,6 +14,7 @@ HVeVConfigMessenger::HVeVConfigMessenger(HVeVConfigManager* mgr)
     , primaryParticleNameCmd(0)
     , primaryParticleEnergyCmd(0)
     , primariesFlagCmd(0)
+    , bottomSurfaceHitsFlagCmd(0)
 {
     hitsCmd = CreateCommand<G4UIcmdWithAString>("HitsFile",
         "Set filename for output of phonon hit locations");
@@ -33,6 +34,10 @@ HVeVConfigMessenger::HVeVConfigMessenger(HVeVConfigManager* mgr)
 
     primariesFlagCmd = CreateCommand<G4UIcmdWithABool>("PrimariesFlag",
         "Set flag for primary particle information saving.");
+    
+    bottomSurfaceHitsFlagCmd = CreateCommand<G4UIcmdWithABool>("BottomSurfaceHitsFlag",
+        "Set flag for bottom surface hits information saving.");
+    
 }
 
 HVeVConfigMessenger::~HVeVConfigMessenger() {
@@ -42,6 +47,7 @@ HVeVConfigMessenger::~HVeVConfigMessenger() {
     delete primaryParticleNameCmd; primaryParticleNameCmd = 0;
     delete primaryParticleEnergyCmd; primaryParticleEnergyCmd = 0;
     delete primariesFlagCmd; primariesFlagCmd = 0;
+    delete bottomSurfaceHitsFlagCmd; bottomSurfaceHitsFlagCmd = 0;
 }
 
 void HVeVConfigMessenger::SetNewValue(G4UIcommand* cmd, G4String value) {
@@ -56,4 +62,6 @@ void HVeVConfigMessenger::SetNewValue(G4UIcommand* cmd, G4String value) {
     if (cmd == primaryParticleEnergyCmd) theManager->SetPrimaryParticleEnergy(primaryParticleEnergyCmd->GetNewDoubleValue(value)/eV);
 
     if (cmd == primariesFlagCmd) theManager->SetPrimariesFlag(primariesFlagCmd->GetNewBoolValue(value));
+
+    if (cmd == bottomSurfaceHitsFlagCmd) theManager->SetBottomSurfaceHitsFlag(bottomSurfaceHitsFlagCmd->GetNewBoolValue(value));
 }

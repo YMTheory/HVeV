@@ -24,6 +24,8 @@ class HVeVDetectorConstruction : public G4VUserDetectorConstruction
         void SetupGeometry();
         void AttachPhononSensor(G4CMPSurfaceProperty* surfProp);
         void AttachField(G4LogicalVolume* lv);
+        // Implemented this to describe the bottom aluminum grid
+        void AttachGrid(G4CMPSurfaceProperty* surfProp);
 
     private:
         G4Material* fLiquidHelium;
@@ -50,6 +52,8 @@ class HVeVDetectorConstruction : public G4VUserDetectorConstruction
         // The two Al readout channels have the same coverage areas
         G4double dp_aluminumInnerTopFilmDimX = dp_siliconChipDimX * 0.7071;
         G4double dp_aluminumInnerTopFilmDimY = dp_siliconChipDimY * 0.7071;
+        G4double dp_aluminumTopFilmDimZ = 600 * CLHEP::nm;
+        G4double dp_aluminumBottomFilmDimZ = 30 * CLHEP::nm;
 
         G4bool fConstructed;
         G4ElectricField* fEMField;

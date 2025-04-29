@@ -17,6 +17,7 @@ class HVeVConfigManager {
         static const G4String& GetPrimaryParticleName() { return Instance()->PrimaryParticleName; }
         static G4double GetPrimaryParticleEnergy() { return Instance()->PrimaryParticleEnergy; }
         static G4bool GetPrimariesFlag() { return Instance()->primaries_flag; }
+        static G4bool GetBottomSurfaceHitsFlag() { return Instance()->bottom_surface_hits_flag; }
 
         // Setter
         static void SetHitOutput(const G4String& name) 
@@ -31,6 +32,8 @@ class HVeVConfigManager {
             { Instance()->PrimaryParticleEnergy = value; UpdateGeometry(); }
         static void SetPrimariesFlag(G4bool flag) 
             { Instance()->primaries_flag = flag; UpdateGeometry(); }
+        static void SetBottomSurfaceHitsFlag(G4bool flag)
+            { Instance()->bottom_surface_hits_flag = flag; UpdateGeometry(); }
 
         static void UpdateGeometry();
 
@@ -53,6 +56,7 @@ class HVeVConfigManager {
 
         // If store primaries information in the event
         G4bool primaries_flag;
+        G4bool bottom_surface_hits_flag;
 
         HVeVConfigMessenger* messenger;
 

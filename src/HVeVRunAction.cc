@@ -55,6 +55,7 @@ void HVeVRunAction::CreateNtuple()
     analysisManager->CreateNtupleDColumn(1, "Edep");
     analysisManager->CreateNtupleDColumn(1, "x");
     analysisManager->CreateNtupleDColumn(1, "y");
+    analysisManager->CreateNtupleDColumn(1, "z");
     analysisManager->FinishNtuple(1);
 
     analysisManager->CreateNtuple("OuterHits", "Outer channel hit information");
@@ -64,6 +65,7 @@ void HVeVRunAction::CreateNtuple()
     analysisManager->CreateNtupleDColumn(2, "Edep");
     analysisManager->CreateNtupleDColumn(2, "x");
     analysisManager->CreateNtupleDColumn(2, "y");
+    analysisManager->CreateNtupleDColumn(2, "z");
     analysisManager->FinishNtuple(2);
 
     G4bool primariesFlag = HVeVConfigManager::GetPrimariesFlag();
@@ -115,6 +117,19 @@ void HVeVRunAction::CreateNtuple()
         analysisManager->CreateNtupleDColumn(6, "endy");
         analysisManager->CreateNtupleDColumn(6, "endz");
         analysisManager->FinishNtuple(6);
+    }
+    
+    G4bool bottom_surface_hits_flag = HVeVConfigManager::GetBottomSurfaceHitsFlag();
+    if (bottom_surface_hits_flag) {
+        analysisManager->CreateNtuple("BottomHits", "Bottom surface hits information (if recorded)");
+        analysisManager->CreateNtupleIColumn(7, "eventid");
+        analysisManager->CreateNtupleIColumn(7, "trackid");
+        analysisManager->CreateNtupleDColumn(7, "hittime");
+        analysisManager->CreateNtupleDColumn(7, "Edep");
+        analysisManager->CreateNtupleDColumn(7, "x");
+        analysisManager->CreateNtupleDColumn(7, "y");
+        analysisManager->CreateNtupleDColumn(7, "z");
+        analysisManager->FinishNtuple(7);
     }
 
 }

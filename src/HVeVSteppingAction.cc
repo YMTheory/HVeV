@@ -30,11 +30,11 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
     const std::vector<const G4Track*>* secondaries = step->GetSecondaryInCurrentStep();
     if (secondaries->size() > 0) {
 
-        //G4cout << "Primary Track ID: " << trackID << " " << particleName
-        //       << " produced " << secondaries->size() << " secondaries" << G4endl;
-
         if (particleName != "phononL" and particleName != "phononTS" and particleName != "phononTF"
             and particleName != "G4CMPDriftElectron" and particleName != "G4CMPDriftHole") {
+
+                G4cout << "Primary Track ID: " << trackID << " " << particleName
+                       << " produced " << secondaries->size() << " secondaries" << G4endl;
                 G4double total_energy_charge_pair = 0.0;
                 G4double total_energy_phonon = 0.0;
                 G4double total_energy_others = 0.0;
@@ -51,15 +51,15 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                             G4double y = secondary->GetPosition().y()/mm;
                             G4double z = secondary->GetPosition().z()/mm;
 
-                            analysisManager->FillNtupleIColumn(3, 0, runMan->GetCurrentEvent()->GetEventID());
-                            analysisManager->FillNtupleIColumn(3, 1, secID);
-                            analysisManager->FillNtupleIColumn(3, 2, trackID);
-                            analysisManager->FillNtupleIColumn(3, 3, pdgCode);
-                            analysisManager->FillNtupleDColumn(3, 4, secEkin);
-                            analysisManager->FillNtupleDColumn(3, 5, x);
-                            analysisManager->FillNtupleDColumn(3, 6, y);
-                            analysisManager->FillNtupleDColumn(3, 7, z);
-                            analysisManager->AddNtupleRow(3);
+                            analysisManager->FillNtupleIColumn(4, 0, runMan->GetCurrentEvent()->GetEventID());
+                            analysisManager->FillNtupleIColumn(4, 1, secID);
+                            analysisManager->FillNtupleIColumn(4, 2, trackID);
+                            analysisManager->FillNtupleIColumn(4, 3, pdgCode);
+                            analysisManager->FillNtupleDColumn(4, 4, secEkin);
+                            analysisManager->FillNtupleDColumn(4, 5, x);
+                            analysisManager->FillNtupleDColumn(4, 6, y);
+                            analysisManager->FillNtupleDColumn(4, 7, z);
+                            analysisManager->AddNtupleRow(4);
                         }
                     }
                     else if (secName == "phononL" or secName == "phononTS" or secName == "phononTF") {
@@ -70,15 +70,15 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                             G4double y = secondary->GetPosition().y()/mm;
                             G4double z = secondary->GetPosition().z()/mm;
 
-                            analysisManager->FillNtupleIColumn(2, 0, runMan->GetCurrentEvent()->GetEventID());
-                            analysisManager->FillNtupleIColumn(2, 1, secID);
-                            analysisManager->FillNtupleIColumn(2, 2, trackID);
-                            analysisManager->FillNtupleIColumn(2, 3, pdgCode);
-                            analysisManager->FillNtupleDColumn(2, 4, secEkin);
-                            analysisManager->FillNtupleDColumn(2, 5, x);
-                            analysisManager->FillNtupleDColumn(2, 6, y);
-                            analysisManager->FillNtupleDColumn(2, 7, z);
-                            analysisManager->AddNtupleRow(2);
+                            analysisManager->FillNtupleIColumn(3, 0, runMan->GetCurrentEvent()->GetEventID());
+                            analysisManager->FillNtupleIColumn(3, 1, secID);
+                            analysisManager->FillNtupleIColumn(3, 2, trackID);
+                            analysisManager->FillNtupleIColumn(3, 3, pdgCode);
+                            analysisManager->FillNtupleDColumn(3, 4, secEkin);
+                            analysisManager->FillNtupleDColumn(3, 5, x);
+                            analysisManager->FillNtupleDColumn(3, 6, y);
+                            analysisManager->FillNtupleDColumn(3, 7, z);
+                            analysisManager->AddNtupleRow(3);
                         }
 
                     }
@@ -107,16 +107,16 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                 if (creator)
                 {
                     if (creator->GetProcessName() == "G4CMPLukeScattering") {
-                        analysisManager->FillNtupleIColumn(4, 0, runMan->GetCurrentEvent()->GetEventID());
-                        analysisManager->FillNtupleIColumn(4, 1, secID);
-                        analysisManager->FillNtupleIColumn(4, 2, trackID);
-                        analysisManager->FillNtupleIColumn(4, 3, pdgCode);
-                        analysisManager->FillNtupleDColumn(4, 4, secEkin);
-                        analysisManager->FillNtupleDColumn(4, 5, t);
-                        analysisManager->FillNtupleDColumn(4, 6, x);                        
-                        analysisManager->FillNtupleDColumn(4, 7, y);                        
-                        analysisManager->FillNtupleDColumn(4, 8, z);                        
-                        analysisManager->AddNtupleRow(4);
+                        analysisManager->FillNtupleIColumn(5, 0, runMan->GetCurrentEvent()->GetEventID());
+                        analysisManager->FillNtupleIColumn(5, 1, secID);
+                        analysisManager->FillNtupleIColumn(5, 2, trackID);
+                        analysisManager->FillNtupleIColumn(5, 3, pdgCode);
+                        analysisManager->FillNtupleDColumn(5, 4, secEkin);
+                        analysisManager->FillNtupleDColumn(5, 5, t);
+                        analysisManager->FillNtupleDColumn(5, 6, x);                        
+                        analysisManager->FillNtupleDColumn(5, 7, y);                        
+                        analysisManager->FillNtupleDColumn(5, 8, z);                        
+                        analysisManager->AddNtupleRow(5);
                     }
                 }
             }
