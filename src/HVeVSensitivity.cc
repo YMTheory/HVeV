@@ -48,30 +48,30 @@ void HVeVSensitivity::EndOfEvent(G4HCofThisEvent* HCE) {
            analysisManager->FillNtupleDColumn(7, 6, hit->GetFinalPosition().getZ()/mm);
            analysisManager->AddNtupleRow(7);
       }
-    }
-    // make sure the hit is collected by the inner readout channel (silly way for now) 
-    if (hit->GetFinalPosition().getX()/mm <= 0.7071 * 5 and hit->GetFinalPosition().getX()/mm > -0.7071 * 5
-    and hit->GetFinalPosition().getY()/mm <=0.7071 * 5 and hit->GetFinalPosition().getY()/mm > -0.7071 * 5)
-    {
-      analysisManager->FillNtupleIColumn(1, 0, runMan->GetCurrentEvent()->GetEventID());
-      analysisManager->FillNtupleIColumn(1, 1, hit->GetTrackID());
-      analysisManager->FillNtupleDColumn(1, 2, hit->GetFinalTime()/ns);
-      analysisManager->FillNtupleDColumn(1, 3, hit->GetEnergyDeposit()/eV);
-      analysisManager->FillNtupleDColumn(1, 4, hit->GetFinalPosition().getX()/mm);
-      analysisManager->FillNtupleDColumn(1, 5, hit->GetFinalPosition().getY()/mm);
-      analysisManager->FillNtupleDColumn(1, 6, hit->GetFinalPosition().getZ()/mm);
-      analysisManager->AddNtupleRow(1);
-    }
-    else {
-      analysisManager->FillNtupleIColumn(2, 0, runMan->GetCurrentEvent()->GetEventID());
-      analysisManager->FillNtupleIColumn(2, 1, hit->GetTrackID());
-      analysisManager->FillNtupleDColumn(2, 2, hit->GetFinalTime()/ns);
-      analysisManager->FillNtupleDColumn(2, 3, hit->GetEnergyDeposit()/eV);
-      analysisManager->FillNtupleDColumn(2, 4, hit->GetFinalPosition().getX()/mm);
-      analysisManager->FillNtupleDColumn(2, 5, hit->GetFinalPosition().getY()/mm);
-      analysisManager->FillNtupleDColumn(2, 6, hit->GetFinalPosition().getZ()/mm);
-      analysisManager->AddNtupleRow(2);
-
+    } else{
+      // make sure the hit is collected by the inner readout channel (silly way for now) 
+      if (hit->GetFinalPosition().getX()/mm <= 0.7071 * 5 and hit->GetFinalPosition().getX()/mm > -0.7071 * 5
+      and hit->GetFinalPosition().getY()/mm <=0.7071 * 5 and hit->GetFinalPosition().getY()/mm > -0.7071 * 5)
+      {
+        analysisManager->FillNtupleIColumn(1, 0, runMan->GetCurrentEvent()->GetEventID());
+        analysisManager->FillNtupleIColumn(1, 1, hit->GetTrackID());
+        analysisManager->FillNtupleDColumn(1, 2, hit->GetFinalTime()/ns);
+        analysisManager->FillNtupleDColumn(1, 3, hit->GetEnergyDeposit()/eV);
+        analysisManager->FillNtupleDColumn(1, 4, hit->GetFinalPosition().getX()/mm);
+        analysisManager->FillNtupleDColumn(1, 5, hit->GetFinalPosition().getY()/mm);
+        analysisManager->FillNtupleDColumn(1, 6, hit->GetFinalPosition().getZ()/mm);
+        analysisManager->AddNtupleRow(1);
+      }
+      else {
+        analysisManager->FillNtupleIColumn(2, 0, runMan->GetCurrentEvent()->GetEventID());
+        analysisManager->FillNtupleIColumn(2, 1, hit->GetTrackID());
+        analysisManager->FillNtupleDColumn(2, 2, hit->GetFinalTime()/ns);
+        analysisManager->FillNtupleDColumn(2, 3, hit->GetEnergyDeposit()/eV);
+        analysisManager->FillNtupleDColumn(2, 4, hit->GetFinalPosition().getX()/mm);
+        analysisManager->FillNtupleDColumn(2, 5, hit->GetFinalPosition().getY()/mm);
+        analysisManager->FillNtupleDColumn(2, 6, hit->GetFinalPosition().getZ()/mm);
+        analysisManager->AddNtupleRow(2);
+      }
     }
   }
 
