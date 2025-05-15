@@ -57,13 +57,20 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
     
     }
     
+    if (name == "phononL" or name == "phononTS" or name == "phononTF") {
+        if (creator) {
+            if (creator -> GetProcessName() == "G4CMPChargeRecombine" ) {
+
+            }
+        }
+    }
+    
     // Set tracks to be visualized
     if (track->GetParentID() == 0 or track->GetParentID() == 1 or track->GetParentID() == 2) {
         fpTrackingManager->SetStoreTrajectory(true);
     } else {
         fpTrackingManager->SetStoreTrajectory(false);
     }
-
 }
 
 void HVeVTrackingAction::PostUserTrackingAction(const G4Track* track)

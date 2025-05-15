@@ -8,6 +8,11 @@
 
 #include "HVeVConfigManager.hh"
 #include "G4CMPConfigManager.hh"
+#include "G4VNIELPartition.hh"
+#include "G4IonTable.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4Material.hh"
+#include "G4NistManager.hh"
 
 HVeVRunAction::HVeVRunAction()
 : G4UserRunAction()
@@ -25,6 +30,30 @@ void HVeVRunAction::BeginOfRunAction(const G4Run* run)
 
     G4CMPConfigManager* cmpConfigManager = G4CMPConfigManager::Instance();
     cmpConfigManager->printConfig(std::cout);
+
+    /*
+    const G4VNIELPartition* niel_partition = cmpConfigManager->GetNIELPartition();
+
+    G4NistManager* nistManager = G4NistManager::Instance();
+    G4Material* fSilicon = nistManager->FindOrBuildMaterial("G4_Si");
+    
+    G4double amu_c2 = 931.494028 * MeV;
+    G4ParticleDefinition* proj = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(3, 7, 0); // Z=4, A=7
+    G4int proj_PDGcode = proj->GetPDGEncoding();
+    if (proj) {
+        G4double Z = proj->GetAtomicNumber();
+        G4double A = proj->GetPDGMass()/amu_c2;
+        G4cout << "Nuclear Recoil: type " << proj_PDGcode << " Z " << Z << " A " << A << G4endl;
+
+        for (int i=0; i<100; i++) {
+            G4double E = (i+1) * eV;
+            G4double f = niel_partition->PartitionNIEL(E, fSilicon, Z, A);
+            G4cout << "Lindhard scaling factor: " << " E " << E * eV << " f " << f << G4endl;
+        }
+    }
+    */
+
+
 }
 
 
@@ -69,7 +98,7 @@ void HVeVRunAction::CreateNtuple()
     analysisManager->FinishNtuple(2);
 
     G4bool primariesFlag = HVeVConfigManager::GetPrimariesFlag();
-    if (primariesFlag) {
+    //if (primariesFlag) {
         analysisManager->CreateNtuple("PrimaryPhonon", "Primary phonon information");
         analysisManager->CreateNtupleIColumn(3, "eventid");
         analysisManager->CreateNtupleIColumn(3, "trackid");
@@ -117,10 +146,10 @@ void HVeVRunAction::CreateNtuple()
         analysisManager->CreateNtupleDColumn(6, "endy");
         analysisManager->CreateNtupleDColumn(6, "endz");
         analysisManager->FinishNtuple(6);
-    }
+    //}
     
     G4bool bottom_surface_hits_flag = HVeVConfigManager::GetBottomSurfaceHitsFlag();
-    if (bottom_surface_hits_flag) {
+    //if (bottom_surface_hits_flag) {
         analysisManager->CreateNtuple("BottomHits", "Bottom surface hits information (if recorded)");
         analysisManager->CreateNtupleIColumn(7, "eventid");
         analysisManager->CreateNtupleIColumn(7, "trackid");
@@ -130,7 +159,17 @@ void HVeVRunAction::CreateNtuple()
         analysisManager->CreateNtupleDColumn(7, "y");
         analysisManager->CreateNtupleDColumn(7, "z");
         analysisManager->FinishNtuple(7);
-    }
+    //}
+
+    analysisManager->CreateNtuple("RecombinePhonon", "Recombine phonon information");
+    analysisManager->CreateNtupleIColumn(8, "eventid");
+    analysisManager->CreateNtupleIColumn(8, "trackid");
+    analysisManager->CreateNtupleDColumn(8, "energy");
+    analysisManager->CreateNtupleDColumn(8, "starttime");
+    analysisManager->CreateNtupleDColumn(8, "startx");
+    analysisManager->CreateNtupleDColumn(8, "starty");
+    analysisManager->CreateNtupleDColumn(8, "startz");
+    analysisManager->FinishNtuple(8);
 
 }
 

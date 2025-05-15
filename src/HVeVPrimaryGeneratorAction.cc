@@ -15,6 +15,7 @@
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4IonTable.hh"
+#include "Randomize.hh"
 
 
 using namespace std;
@@ -31,6 +32,27 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 
     G4String f_primaryParticleName = HVeVConfigManager::GetPrimaryParticleName();
     G4double f_primaryParticleEnergy = HVeVConfigManager::GetPrimaryParticleEnergy();
+    G4String f_primaryParticlePosType = HVeVConfigManager::GetPrimaryParticlePosType();
+    G4double f_primaryParticlePosCenterX = HVeVConfigManager::GetPrimaryParticlePosCenterX()/mm;
+    G4double f_primaryParticlePosCenterY = HVeVConfigManager::GetPrimaryParticlePosCenterY()/mm;
+    G4double f_primaryParticlePosCenterZ = HVeVConfigManager::GetPrimaryParticlePosCenterZ()/mm;
+    G4double f_primaryParticlePosHalfX = HVeVConfigManager::GetPrimaryParticlePosHalfX()/mm;
+    G4double f_primaryParticlePosHalfY = HVeVConfigManager::GetPrimaryParticlePosHalfY()/mm;
+    G4double f_primaryParticlePosHalfZ = HVeVConfigManager::GetPrimaryParticlePosHalfZ()/mm;
+    f_primaryParticlePosHalfZ = 1e-5 * mm; // 10 nm
+
+    G4cout << "Primary particle pos-type is " << f_primaryParticlePosType
+           << " center at ( " 
+           << f_primaryParticlePosCenterX << ", "
+           << f_primaryParticlePosCenterY << ", "
+           << f_primaryParticlePosCenterZ
+           << " ) and the volume half lengths are ( " 
+           << f_primaryParticlePosHalfX << ", "
+           << f_primaryParticlePosHalfY << ", "
+           << f_primaryParticlePosHalfZ
+           << ") "
+           << G4endl;
+
 
     if (f_primaryParticleName == "chargepair") {
         // Generate Drift Electron:
@@ -77,12 +99,49 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(56.83 * eV);
+        fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType("Point");
+        //fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType(f_primaryParticlePosType);
+        
+        if (f_primaryParticlePosType == "Volume") {
+            G4double RandVar = G4UniformRand();
+            G4double r_primaryParticlePosCenterX = f_primaryParticlePosCenterX - f_primaryParticlePosHalfX 
+                                                 + 2 * f_primaryParticlePosHalfX * RandVar;
+            RandVar = G4UniformRand();
+            G4double r_primaryParticlePosCenterY = f_primaryParticlePosCenterY - f_primaryParticlePosHalfY 
+                                                 + 2 * f_primaryParticlePosHalfY * RandVar;
+            RandVar = G4UniformRand();
+            G4double r_primaryParticlePosCenterZ = f_primaryParticlePosCenterZ - f_primaryParticlePosHalfZ 
+                                                 + 2 * f_primaryParticlePosHalfZ * RandVar;
+            fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(r_primaryParticlePosCenterX, 
+                                                                                          r_primaryParticlePosCenterY,
+                                                                                          r_primaryParticlePosCenterZ));
+        }
+        
+        if (f_primaryParticlePosType == "Point") {
+            fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(f_primaryParticlePosCenterX, 
+                                                                                          f_primaryParticlePosCenterY,
+                                                                                          f_primaryParticlePosCenterZ));
+        }
         fParticleGPS->GeneratePrimaryVertex(anEvent);
+
+        G4PrimaryVertex* vertex = anEvent->GetPrimaryVertex(0);
+        G4double vertex_X = vertex->GetX0();
+        G4double vertex_Y = vertex->GetY0();
+        G4double vertex_Z = vertex->GetZ0();
+        G4cout << "Primary Vertex at ( " << vertex_X << ", " 
+                                         << vertex_Y << ", "
+                                         << vertex_Z << " ) "
+                                         << G4endl;
 
         fParticleGPS->SetParticleDefinition(G4Electron::Definition());
         fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(54 * eV);
+        fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType("Point");
+        fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(vertex_X, 
+                                                                                      vertex_Y,
+                                                                                      vertex_Z
+                                                                        ));
         fParticleGPS->GeneratePrimaryVertex(anEvent);
     }
 

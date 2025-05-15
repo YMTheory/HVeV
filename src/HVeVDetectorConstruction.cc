@@ -23,6 +23,7 @@
 #include "G4SDManager.hh"
 #include "G4SolidStore.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
 #include "G4TransportationManager.hh"
 #include "G4Tubs.hh"
 #include "G4UserLimits.hh"

@@ -23,6 +23,14 @@ class HVeVConfigMessenger : public G4UImessenger {
         G4UIcmdWithADoubleAndUnit* voltageCmd;
         G4UIcmdWithAString* primaryParticleNameCmd;
         G4UIcmdWithADoubleAndUnit* primaryParticleEnergyCmd;
+        G4UIcmdWithAString* primaryParticlePosTypeCmd;
+        G4UIcmdWithADoubleAndUnit* primaryParticlePosCenterXCmd;
+        G4UIcmdWithADoubleAndUnit* primaryParticlePosCenterYCmd;
+        G4UIcmdWithADoubleAndUnit* primaryParticlePosCenterZCmd;
+        G4UIcmdWithADoubleAndUnit* primaryParticlePosHalfXCmd;
+        G4UIcmdWithADoubleAndUnit* primaryParticlePosHalfYCmd;
+        G4UIcmdWithADoubleAndUnit* primaryParticlePosHalfZCmd;
+
         G4UIcmdWithABool* primariesFlagCmd;
         G4UIcmdWithABool* bottomSurfaceHitsFlagCmd;
 
