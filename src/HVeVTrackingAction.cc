@@ -24,6 +24,10 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
     G4double pretrack_x        = pretrackpos.getX()/mm; 
     G4double pretrack_y        = pretrackpos.getY()/mm;
     G4double pretrack_z        = pretrackpos.getZ()/mm;
+    G4ThreeVector p            = track->GetMomentum();
+    G4double px                = p.getX()/eV;
+    G4double py                = p.getY()/eV;
+    G4double pz                = p.getZ()/eV;
     G4int trackID              = track->GetTrackID();
     G4int parentID             = track->GetParentID();
     const  G4VProcess* creator = track->GetCreatorProcess();
@@ -38,7 +42,10 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
                << energy << " eV "
                << pretrack_x << " "
                << pretrack_y << " "
-               << pretrack_z << " mm"
+               << pretrack_z << " mm "
+               << px << " "
+               << py << " "
+               << pz << " "
                << G4endl;
 
         if (HVeVConfigManager::Instance()->GetPrimariesFlag()) {
@@ -52,6 +59,9 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
             analysisManager->FillNtupleDColumn(6, 5, pretrack_x);
             analysisManager->FillNtupleDColumn(6, 6, pretrack_y);
             analysisManager->FillNtupleDColumn(6, 7, pretrack_z);
+            analysisManager->FillNtupleDColumn(6, 8, px);
+            analysisManager->FillNtupleDColumn(6, 9, py);
+            analysisManager->FillNtupleDColumn(6, 10, pz);
             //analysisManager->AddNtupleRow(5);
         }
     
@@ -99,9 +109,9 @@ void HVeVTrackingAction::PostUserTrackingAction(const G4Track* track)
         if (HVeVConfigManager::Instance()->GetPrimariesFlag()) {
             G4RunManager* runMan = G4RunManager::GetRunManager();
             auto analysisManager = G4AnalysisManager::Instance();
-            analysisManager->FillNtupleDColumn(6, 8, posttrack_x);
-            analysisManager->FillNtupleDColumn(6, 9, posttrack_y);
-            analysisManager->FillNtupleDColumn(6, 10, posttrack_z);
+            analysisManager->FillNtupleDColumn(6, 11, posttrack_x);
+            analysisManager->FillNtupleDColumn(6, 12, posttrack_y);
+            analysisManager->FillNtupleDColumn(6, 13, posttrack_z);
             analysisManager->AddNtupleRow(6);
         }
     }

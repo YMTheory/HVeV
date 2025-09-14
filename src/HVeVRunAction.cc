@@ -142,6 +142,9 @@ void HVeVRunAction::CreateNtuple()
         analysisManager->CreateNtupleDColumn(6, "startx");
         analysisManager->CreateNtupleDColumn(6, "starty");
         analysisManager->CreateNtupleDColumn(6, "startz");
+        analysisManager->CreateNtupleDColumn(6, "px");
+        analysisManager->CreateNtupleDColumn(6, "py");
+        analysisManager->CreateNtupleDColumn(6, "pz");
         analysisManager->CreateNtupleDColumn(6, "endx");
         analysisManager->CreateNtupleDColumn(6, "endy");
         analysisManager->CreateNtupleDColumn(6, "endz");
@@ -170,6 +173,11 @@ void HVeVRunAction::CreateNtuple()
     analysisManager->CreateNtupleDColumn(8, "starty");
     analysisManager->CreateNtupleDColumn(8, "startz");
     analysisManager->FinishNtuple(8);
+
+    analysisManager->CreateNtuple("EnergyDeposit", "Energy deposition Info");
+    analysisManager->CreateNtupleIColumn(9, "eventid");
+    analysisManager->CreateNtupleDColumn(9, "Edep");
+    analysisManager->FinishNtuple(9);
 
 }
 

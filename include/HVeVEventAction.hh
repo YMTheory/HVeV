@@ -13,6 +13,12 @@ class HVeVEventAction : public G4UserEventAction
     public:
         virtual void BeginOfEventAction(const G4Event*);
         virtual void   EndOfEventAction(const G4Event*);
+
+    public:
+        double edep;
+
+        void SetEdepOfThisEvent(double val) {edep = val;}
+        double GetEdepOfThisEvent() {return edep;}
 };
 
 #endif

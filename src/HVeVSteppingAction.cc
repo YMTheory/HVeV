@@ -1,5 +1,6 @@
 #include "HVeVSteppingAction.hh"
 #include "HVeVConfigManager.hh"
+#include "HVeVEventAction.hh"
 
 #include "G4Step.hh"
 #include "G4Track.hh"
@@ -49,6 +50,20 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                 G4double total_energy_charge_pair = 0.0;
                 G4double total_energy_phonon = 0.0;
                 G4double total_energy_others = 0.0;
+
+                G4VPhysicalVolume* postVolume = step->GetPostStepPoint()->GetTouchableHandle()->GetVolume();
+                if (step->GetTotalEnergyDeposit() > 0 and postVolume->GetName() == "fSiliconPhysical") { 
+                    //G4cout << "Total energy deposit in this step is : " << step->GetTotalEnergyDeposit()/eV << " eV" 
+                    //       << " in the physical volume: " 
+                    //       << postVolume->GetName()
+                    //       << G4endl;
+                
+                    HVeVEventAction* eventAction = (HVeVEventAction*)runMan->GetUserEventAction();
+                    G4double edep = eventAction->GetEdepOfThisEvent();
+                    edep += step->GetTotalEnergyDeposit()/eV;
+                    eventAction->SetEdepOfThisEvent(edep);
+
+                }
 
                 for (auto secondary : *secondaries) {
                     G4int secID = secondary->GetTrackID();
