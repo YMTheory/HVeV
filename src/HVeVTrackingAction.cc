@@ -30,6 +30,7 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
     G4double pz                = p.getZ()/eV;
     G4int trackID              = track->GetTrackID();
     G4int parentID             = track->GetParentID();
+    G4double globalTime        = track->GetGlobalTime();
     const  G4VProcess* creator = track->GetCreatorProcess();
 
     if (name != "phononL" and name != "phononTS" and name != "phononTF" 
@@ -62,6 +63,7 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
             analysisManager->FillNtupleDColumn(6, 8, px);
             analysisManager->FillNtupleDColumn(6, 9, py);
             analysisManager->FillNtupleDColumn(6, 10, pz);
+            analysisManager->FillNtupleDColumn(6, 11, globalTime);
             //analysisManager->AddNtupleRow(5);
         }
     
@@ -109,9 +111,9 @@ void HVeVTrackingAction::PostUserTrackingAction(const G4Track* track)
         if (HVeVConfigManager::Instance()->GetPrimariesFlag()) {
             G4RunManager* runMan = G4RunManager::GetRunManager();
             auto analysisManager = G4AnalysisManager::Instance();
-            analysisManager->FillNtupleDColumn(6, 11, posttrack_x);
-            analysisManager->FillNtupleDColumn(6, 12, posttrack_y);
-            analysisManager->FillNtupleDColumn(6, 13, posttrack_z);
+            analysisManager->FillNtupleDColumn(6, 12, posttrack_x);
+            analysisManager->FillNtupleDColumn(6, 13, posttrack_y);
+            analysisManager->FillNtupleDColumn(6, 14, posttrack_z);
             analysisManager->AddNtupleRow(6);
         }
     }

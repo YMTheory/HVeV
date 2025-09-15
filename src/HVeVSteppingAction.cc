@@ -36,6 +36,9 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
     G4int pdgCode = track->GetDefinition()->GetPDGEncoding();
     G4double ekin = track->GetKineticEnergy()/eV;
 
+    G4double ekin_initial = step->GetPreStepPoint()->GetKineticEnergy()/eV;
+    G4double ekin_final = step->GetPostStepPoint()->GetKineticEnergy()/eV;
+
     G4RunManager* runMan = G4RunManager::GetRunManager();
     auto analysisManager = G4AnalysisManager::Instance();
 
@@ -45,14 +48,15 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
         if (particleName != "phononL" and particleName != "phononTS" and particleName != "phononTF"
             and particleName != "G4CMPDriftElectron" and particleName != "G4CMPDriftHole") {
 
-                G4cout << "Primary Track ID: " << trackID << " " << particleName
+                G4cout << "Primary Track ID: " << trackID << " " << particleName  
+                       << " with Kinetic Energy: " << ekin << " eV "
                        << " produced " << secondaries->size() << " secondaries" << G4endl;
                 G4double total_energy_charge_pair = 0.0;
                 G4double total_energy_phonon = 0.0;
                 G4double total_energy_others = 0.0;
 
                 G4VPhysicalVolume* postVolume = step->GetPostStepPoint()->GetTouchableHandle()->GetVolume();
-                if (step->GetTotalEnergyDeposit() - step->GetNonIonizingEnergyDeposit() > 0 and postVolume->GetName() == "fSiliconPhysical" and trackID != 1) { 
+                if (step->GetTotalEnergyDeposit() > 0 and postVolume->GetName() == "fSiliconPhysical" and trackID != 1) { 
                     G4cout << "Total energy deposit in this step is : " << step->GetTotalEnergyDeposit()/eV << " eV" 
                            << ", (non-ionizing part: " << step->GetNonIonizingEnergyDeposit()/eV << " eV)"
                            << " in the physical volume: " 
@@ -114,7 +118,7 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                         G4cout << "Secondary Track ID: " << secID << " " << secName << " Ekin: " << secEkin << G4endl;
                     }
                 }
-            G4cout << "\nTotal energy partition of " << particleName << ": " << ekin << " eV\n"
+            G4cout << "\nTotal energy partition of " << particleName << ": " << ekin_initial - ekin_final << " eV\n"
                    << "Charge-pair: " << total_energy_charge_pair << " eV\n"
                    << "Phonon: " << total_energy_phonon << " eV\n"
                    << "Others: " << total_energy_others << " eV\n" << G4endl;
@@ -134,13 +138,13 @@ void HVeVSteppingAction::UserSteppingAction(const G4Step* step)
                 if (creator)
                 {
                     if (creator->GetProcessName() == "G4CMPLukeScattering") {
-                        G4cout << "This is a Luke " 
-                               << secName 
-                               << " generated from the parent trackID = "
-                               << trackID 
-                               << ", which is a "
-                               << particleName
-                               << G4endl;
+                        //G4cout << "This is a Luke " 
+                        //       << secName 
+                        //       << " generated from the parent trackID = "
+                        //       << trackID 
+                        //       << ", which is a "
+                        //       << particleName
+                        //       << G4endl;
                         analysisManager->FillNtupleIColumn(5, 0, runMan->GetCurrentEvent()->GetEventID());
                         analysisManager->FillNtupleIColumn(5, 1, secID);
                         analysisManager->FillNtupleIColumn(5, 2, trackID);

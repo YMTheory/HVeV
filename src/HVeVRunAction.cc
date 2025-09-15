@@ -145,6 +145,7 @@ void HVeVRunAction::CreateNtuple()
         analysisManager->CreateNtupleDColumn(6, "px");
         analysisManager->CreateNtupleDColumn(6, "py");
         analysisManager->CreateNtupleDColumn(6, "pz");
+        analysisManager->CreateNtupleDColumn(6, "time");
         analysisManager->CreateNtupleDColumn(6, "endx");
         analysisManager->CreateNtupleDColumn(6, "endy");
         analysisManager->CreateNtupleDColumn(6, "endz");
