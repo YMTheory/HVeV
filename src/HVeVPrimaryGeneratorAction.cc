@@ -88,6 +88,8 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(4, 7, 0); // Z=4, A=7
         fParticleGPS->SetParticleDefinition(ion);
         fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(0.0 * eV);
         fParticleGPS->GeneratePrimaryVertex(anEvent);
 
     }
