@@ -30,7 +30,7 @@ void HVeVTrackingAction::PreUserTrackingAction(const G4Track* track)
     G4double pz                = p.getZ()/eV;
     G4int trackID              = track->GetTrackID();
     G4int parentID             = track->GetParentID();
-    G4double globalTime        = track->GetGlobalTime();
+    G4double globalTime        = track->GetGlobalTime()/ns;
     const  G4VProcess* creator = track->GetCreatorProcess();
 
     if (name != "phononL" and name != "phononTS" and name != "phononTF" 

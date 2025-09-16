@@ -83,7 +83,7 @@ void HVeVConfigMessenger::SetNewValue(G4UIcommand* cmd, G4String value) {
 
     if (cmd == hitsRootfileCmd) theManager->SetHitRootFile(value);
 
-    if (cmd == voltageCmd) theManager->SetVoltage(voltageCmd->GetNewDoubleValue(value));
+    if (cmd == voltageCmd) {theManager->SetVoltage(voltageCmd->GetNewDoubleValue(value)/volt);}
 
     if (cmd == primaryParticleNameCmd) theManager->SetPrimaryParticleName(value);
 
