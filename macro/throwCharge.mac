@@ -1,7 +1,7 @@
 /tracking/verbose 2
 
 /hvev/PrimaryParticleName chargepair
-/hvev/HitsRootFile /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/test_1meVChargepair_10umAboveBottom
+/hvev/HitsRootFile test_1meVChargepair_10umAboveBottom
 /hvev/PrimaryParticleEnergy 0.001 eV
 /hvev/PrimariesFlag true
 /hvev/voltage 0. volt

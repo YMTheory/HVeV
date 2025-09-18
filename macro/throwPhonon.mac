@@ -7,13 +7,13 @@
 /g4cmp/producePhonons 1.0 
 /g4cmp/sampleLuke 1.0 
 
-/hvev/HitsRootFile /Users/yumiao/Documents/Works/SterileNeutrino/BeEST/Simulation/HVeV/build/test_phononL_2.7meV_center_noVbias
+/hvev/HitsRootFile test_phononL_2.7meV_center_noVbias.root
 /hvev/PrimariesFlag false
 
 /gps/particle phononL
 /gps/energy 2.7e-3 eV
 /gps/pos/type Point
-/gps/pos/centre 0. 0. 1.0 mm
+/gps/pos/centre 0. 0. 0.0 mm
 /gps/ang/type iso
 
-/run/beamOn 1
+/run/beamOn 100
