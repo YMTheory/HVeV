@@ -273,6 +273,7 @@ AttachPhononSensor(G4CMPSurfaceProperty* surfProp)
     surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
     // TEST if the electrode object is attached
     G4CMPVElectrodePattern* electrode = surfProp->GetPhononElectrode();
+    electrode->SetVerboseLevel(2);
 }
 
 void HVeVDetectorConstruction::
@@ -293,6 +294,7 @@ AttachGrid(G4CMPSurfaceProperty* surfProp)
     surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
     // TEST if the electrode object is attached
     G4CMPVElectrodePattern* electrode = surfProp->GetPhononElectrode();
+    electrode->SetVerboseLevel(2);
 
 }
 
