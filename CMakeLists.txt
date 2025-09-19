@@ -51,6 +51,8 @@ set(hvev_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVTrackingAction.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVSteppingAction.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVHit.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVPhononElectrode.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/HVeVKaplanQP.cc
     )
     
 if(USE_GEANT4_STATIC_LIBS)
