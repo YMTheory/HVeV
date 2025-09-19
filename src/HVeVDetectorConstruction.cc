@@ -295,7 +295,7 @@ AttachGrid(G4CMPSurfaceProperty* surfProp)
     sensorProp->AddConstProperty("filmThickness", 30.*nm);
     sensorProp->AddConstProperty("gapEnergy", 173.715e-6*eV);
     sensorProp->AddConstProperty("lowQPLimit", 3.);
-    sensorProp->AddConstProperty("highQPLimit", 10.);
+    sensorProp->AddConstProperty("highQPLimit", 10.);  // Those two parameters are important for Quasiparticle generation.
     sensorProp->AddConstProperty("phononLifetime", 242.*ps);
     sensorProp->AddConstProperty("phononLifetimeSlope", 0.29);
     sensorProp->AddConstProperty("vSound", 3.26*km/s);
