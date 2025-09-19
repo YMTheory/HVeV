@@ -1,6 +1,8 @@
 #include "HVeVDetectorConstruction.hh"
 #include "HVeVSensitivity.hh"
 #include "HVeVConfigManager.hh"
+#include "HVeVPhononElectrode.hh"
+
 #include "G4CMPLogicalBorderSurface.hh"
 #include "G4CMPPhononElectrode.hh"
 #include "G4CMPVElectrodePattern.hh"
@@ -264,16 +266,24 @@ AttachPhononSensor(G4CMPSurfaceProperty* surfProp)
     sensorProp->AddConstProperty("filmThickness", 600.*nm);
     sensorProp->AddConstProperty("gapEnergy", 173.715e-6*eV);
     sensorProp->AddConstProperty("lowQPLimit", 3.);
+    sensorProp->AddConstProperty("highQPLimit", 10.);
     sensorProp->AddConstProperty("phononLifetime", 242.*ps);
     sensorProp->AddConstProperty("phononLifetimeSlope", 0.29);
     sensorProp->AddConstProperty("vSound", 3.26*km/s);
     sensorProp->AddConstProperty("subgapAbsorption", 0.1);
 
+    G4CMPPhononElectrode* electrode = new G4CMPPhononElectrode();
+    //electrode->SetVerboseLevel(2);
+    
+    //HVeVPhononElectrode* electrode = new HVeVPhononElectrode();
+    //electrode->SetVerboseLevel(2);
+    surfProp->SetPhononElectrode(electrode);
+
     // Attach electrode object to handle KaplanQP interface
-    surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
+    //surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
     // TEST if the electrode object is attached
-    G4CMPVElectrodePattern* electrode = surfProp->GetPhononElectrode();
-    electrode->SetVerboseLevel(2);
+    //G4CMPPhononElectrode* electrode1 = surfProp->GetPhononElectrode();
+    G4CMPVElectrodePattern* electrode1 = surfProp->GetPhononElectrode();
 }
 
 void HVeVDetectorConstruction::
@@ -285,6 +295,7 @@ AttachGrid(G4CMPSurfaceProperty* surfProp)
     sensorProp->AddConstProperty("filmThickness", 30.*nm);
     sensorProp->AddConstProperty("gapEnergy", 173.715e-6*eV);
     sensorProp->AddConstProperty("lowQPLimit", 3.);
+    sensorProp->AddConstProperty("highQPLimit", 10.);
     sensorProp->AddConstProperty("phononLifetime", 242.*ps);
     sensorProp->AddConstProperty("phononLifetimeSlope", 0.29);
     sensorProp->AddConstProperty("vSound", 3.26*km/s);
