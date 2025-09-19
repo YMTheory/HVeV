@@ -1,10 +1,14 @@
 #include "HVeVDetectorConstruction.hh"
 #include "HVeVSensitivity.hh"
 #include "HVeVConfigManager.hh"
+#include "HVeVPhononElectrode.hh"
+
 #include "G4CMPLogicalBorderSurface.hh"
 #include "G4CMPPhononElectrode.hh"
+#include "G4CMPVElectrodePattern.hh"
 #include "G4CMPSurfaceProperty.hh"
 #include "G4Box.hh"
+#include "G4SubtractionSolid.hh"
 #include "G4Colour.hh"
 #include "G4GeometryManager.hh"
 #include "G4LatticeLogical.hh"
@@ -21,6 +25,7 @@
 #include "G4SDManager.hh"
 #include "G4SolidStore.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
 #include "G4TransportationManager.hh"
 #include "G4Tubs.hh"
 #include "G4UserLimits.hh"
@@ -28,6 +33,9 @@
 #include "G4CMPFieldManager.hh"
 #include "G4CMPMeshElectricField.hh"
 #include "G4UniformElectricField.hh"
+
+#include "G4CMPConfigManager.hh"
+#include "G4VNIELPartition.hh"
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -59,6 +67,7 @@ G4VPhysicalVolume* HVeVDetectorConstruction::Construct()
         outputFileName = HVeVConfigManager::GetHitOutput();
             if (electrodeSensitivity) electrodeSensitivity->SetOutputFile(outputFileName);
         }
+
 
         if (voltage != HVeVConfigManager::GetVoltage()) {
             delete fEMField; fEMField = nullptr;
@@ -115,29 +124,73 @@ void HVeVDetectorConstruction::SetupGeometry()
     G4LatticePhysical* SiPhysical = new G4LatticePhysical(SiLogical);
     SiPhysical->SetMillerOrientation(1, 0, 0);
     LM->RegisterLattice(SiPhys, SiPhysical);
-    
+
+    G4CMPConfigManager* config_manager = G4CMPConfigManager::Instance();
+    const G4VNIELPartition* nielPartition = config_manager->GetNIELPartition(); 
+    //for (int i=1; i<101; i++) {}
     // Set up the aluminum superconducting thin films
-    G4VSolid* fAluminumSolid = new G4Box("aluminiumSolid",
-                                        dp_aluminumFilmDimX/2.,
-                                        dp_aluminumFilmDimY/2.,
-                                        dp_aluminumFilmDimZ/2.
+    /// Below is the first try, where I simplified it as a whole film covering the whole top/bottom surface.
+    G4VSolid* fAluminumTopSolid = new G4Box("aluminumTopSolid",
+                                            dp_aluminumFilmDimX/2.,
+                                            dp_aluminumFilmDimY/2.,
+                                            dp_aluminumTopFilmDimZ/2.
                                     );
-    G4LogicalVolume* fAluminumLogical =
-        new G4LogicalVolume(fAluminumSolid, fAluminum, "fAluminumLogical");
-    G4VPhysicalVolume* aluminumTopPhysical = new G4PVPlacement(0,
-                                                            G4ThreeVector(0., 0., (dp_siliconChipDimZ+dp_aluminumFilmDimZ)/2.),
-                                                            fAluminumLogical,
-                                                            "fAluminumPhysical",
-                                                            worldLogical,
-                                                            false,
-                                                            0);
+
+    G4VSolid* fAluminumBottomSolid = new G4Box("aluminumBottomSolid",
+                                                dp_aluminumFilmDimX/2.,
+                                                dp_aluminumFilmDimY/2.,
+                                                dp_aluminumBottomFilmDimZ/2.
+                                            );
+    G4LogicalVolume* fAluminumBottomLogical =
+        new G4LogicalVolume(fAluminumBottomSolid, fAluminum, "fAluminumBottomLogical");
+    //G4VPhysicalVolume* aluminumTopPhysical = new G4PVPlacement(0,
+    //                                                        G4ThreeVector(0., 0., (dp_siliconChipDimZ+dp_aluminumFilmDimZ)/2.),
+    //                                                        fAluminumLogical,
+    //                                                        "fAluminumPhysical",
+    //                                                        worldLogical,
+    //                                                        false,
+    //                                                        0);
     G4VPhysicalVolume* aluminumBotPhysical = new G4PVPlacement(0,
-                                                            G4ThreeVector(0., 0., -(dp_siliconChipDimZ+dp_aluminumFilmDimZ)/2.),
-                                                            fAluminumLogical,
-                                                            "fAluminumPhysical",
+                                                            G4ThreeVector(0., 0., -(dp_siliconChipDimZ+dp_aluminumBottomFilmDimZ)/2.),
+                                                            fAluminumBottomLogical,
+                                                            "fAluminumBottomPhysical",
                                                             worldLogical,
                                                             false,
                                                             1);
+    
+    // Below is where the two readout channels are implemented.
+    G4VSolid* fAluminumInnerTopSolid = new G4Box( "aluminumInnerTopSolid",
+                                                  dp_aluminumInnerTopFilmDimX/2.,
+                                                  dp_aluminumInnerTopFilmDimY/2.,
+                                                  dp_aluminumTopFilmDimZ/2.
+                                                );
+    G4LogicalVolume* fAluminumInnerTopLogical = 
+                    new G4LogicalVolume(fAluminumInnerTopSolid, fAluminum, "fAluminumInnerTopLogical");
+    
+    G4VPhysicalVolume* aluminumInnerTopPhysical = new G4PVPlacement( 0, 
+                                                                    G4ThreeVector(0., 0., (dp_siliconChipDimZ + dp_aluminumTopFilmDimZ)/2.), 
+                                                                    fAluminumInnerTopLogical,
+                                                                    "fAluminumInnerTopPhysical",
+                                                                    worldLogical,
+                                                                    false,
+                                                                    0
+                                                                  );
+    G4SubtractionSolid* fAluminumOuterTopSolid = new G4SubtractionSolid( "aluminumOuterTopSolid",
+                                                                         fAluminumTopSolid,
+                                                                         fAluminumInnerTopSolid
+                                                                        );
+    G4LogicalVolume* fAluminumOuterTopLogical = 
+                    new G4LogicalVolume(fAluminumOuterTopSolid, fAluminum, "fAluminumOuterTopLogical");
+    G4VPhysicalVolume* aluminumOuterTopPhysical = new G4PVPlacement( 0, 
+                                                                    G4ThreeVector(0., 0., (dp_siliconChipDimZ + dp_aluminumTopFilmDimZ)/2.), 
+                                                                    fAluminumOuterTopLogical,
+                                                                    "fAluminumOuterTopPhysical",
+                                                                    worldLogical,
+                                                                    false,
+                                                                    0
+                                                                  );
+
+
     // detector -- Note: "sensitive detector" is atttached to the silicon substrate
     G4SDManager* SDman = G4SDManager::GetSDMpointer();
     if (!electrodeSensitivity) {
@@ -147,7 +200,7 @@ void HVeVDetectorConstruction::SetupGeometry()
     }
     
     // Set up the electric field across the silicon substrate
-    // AttachField(fSiliconLogical);
+    AttachField(fSiliconLogical);
 
     if (!fConstructed) {
         const G4double GHz = 1e9 * hertz;
@@ -169,7 +222,8 @@ void HVeVDetectorConstruction::SetupGeometry()
     					   	        0.3, 1.0, 0.0, 0.0);
         botSurfProp->AddScatteringProperties(anhCutoff, reflCutoff, anhCoeffs,
     					 diffCoeffs, specCoeffs, GHz, GHz, GHz);
-        AttachPhononSensor(botSurfProp);
+        //AttachPhononSensor(botSurfProp);
+        AttachGrid(botSurfProp);
 
         wallSurfProp = new G4CMPSurfaceProperty("WallSurf", 0.0, 1.0, 0.0, 0.0,
     					    	          0.0, 1.0, 0.0, 0.0);
@@ -178,7 +232,12 @@ void HVeVDetectorConstruction::SetupGeometry()
 
     }
 
-    new G4CMPLogicalBorderSurface("detTop", SiPhys, aluminumTopPhysical,
+    // One whole film implementation below,
+    //new G4CMPLogicalBorderSurface("detTop", SiPhys, aluminumTopPhysical,
+	//	    		topSurfProp);
+    new G4CMPLogicalBorderSurface("detInnerTop", SiPhys, aluminumInnerTopPhysical,
+		    		topSurfProp);
+    new G4CMPLogicalBorderSurface("detOuterTop", SiPhys, aluminumOuterTopPhysical,
 		    		topSurfProp);
     new G4CMPLogicalBorderSurface("detBot", SiPhys, aluminumBotPhysical,
 		    		botSurfProp);
@@ -192,7 +251,9 @@ void HVeVDetectorConstruction::SetupGeometry()
     G4VisAttributes* simpleBoxVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
     simpleBoxVisAtt->SetVisibility(true);
     fSiliconLogical->SetVisAttributes(simpleBoxVisAtt);
-    fAluminumLogical->SetVisAttributes(simpleBoxVisAtt);
+    fAluminumInnerTopLogical->SetVisAttributes(simpleBoxVisAtt);
+    fAluminumOuterTopLogical->SetVisAttributes(simpleBoxVisAtt);
+    fAluminumBottomLogical->SetVisAttributes(simpleBoxVisAtt);
 }
 
 void HVeVDetectorConstruction::
@@ -205,6 +266,36 @@ AttachPhononSensor(G4CMPSurfaceProperty* surfProp)
     sensorProp->AddConstProperty("filmThickness", 600.*nm);
     sensorProp->AddConstProperty("gapEnergy", 173.715e-6*eV);
     sensorProp->AddConstProperty("lowQPLimit", 3.);
+    sensorProp->AddConstProperty("highQPLimit", 10.);
+    sensorProp->AddConstProperty("phononLifetime", 242.*ps);
+    sensorProp->AddConstProperty("phononLifetimeSlope", 0.29);
+    sensorProp->AddConstProperty("vSound", 3.26*km/s);
+    sensorProp->AddConstProperty("subgapAbsorption", 0.1);
+
+    G4CMPPhononElectrode* electrode = new G4CMPPhononElectrode();
+    //electrode->SetVerboseLevel(2);
+    
+    //HVeVPhononElectrode* electrode = new HVeVPhononElectrode();
+    //electrode->SetVerboseLevel(2);
+    surfProp->SetPhononElectrode(electrode);
+
+    // Attach electrode object to handle KaplanQP interface
+    //surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
+    // TEST if the electrode object is attached
+    //G4CMPPhononElectrode* electrode1 = surfProp->GetPhononElectrode();
+    G4CMPVElectrodePattern* electrode1 = surfProp->GetPhononElectrode();
+}
+
+void HVeVDetectorConstruction::
+AttachGrid(G4CMPSurfaceProperty* surfProp)
+{
+    if (!surfProp) return;
+    auto sensorProp = surfProp->GetPhononMaterialPropertiesTablePointer();
+    sensorProp->AddConstProperty("filmAbsorption", 0.20);    // True sensor area
+    sensorProp->AddConstProperty("filmThickness", 30.*nm);
+    sensorProp->AddConstProperty("gapEnergy", 173.715e-6*eV);
+    sensorProp->AddConstProperty("lowQPLimit", 3.);
+    sensorProp->AddConstProperty("highQPLimit", 10.);
     sensorProp->AddConstProperty("phononLifetime", 242.*ps);
     sensorProp->AddConstProperty("phononLifetimeSlope", 0.29);
     sensorProp->AddConstProperty("vSound", 3.26*km/s);
@@ -212,6 +303,10 @@ AttachPhononSensor(G4CMPSurfaceProperty* surfProp)
 
     // Attach electrode object to handle KaplanQP interface
     surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
+    // TEST if the electrode object is attached
+    G4CMPVElectrodePattern* electrode = surfProp->GetPhononElectrode();
+    electrode->SetVerboseLevel(2);
+
 }
 
 void HVeVDetectorConstruction::AttachField(G4LogicalVolume* lv)
@@ -225,4 +320,5 @@ void HVeVDetectorConstruction::AttachField(G4LogicalVolume* lv)
         lv->SetFieldManager(fFieldMgr, true);
     }
     lv->GetFieldManager()->SetDetectorField(fEMField);
+    G4cout << "Applied bias voltage " << voltage << " volt across the silicon substrate" << G4endl;
 }
