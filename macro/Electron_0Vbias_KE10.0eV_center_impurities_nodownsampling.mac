@@ -1,0 +1,31 @@
+/tracking/verbose 0
+/random/setSeeds 647 0
+
+/g4cmp/phononBounces 1000 
+
+/g4cmp/produceCharges 1.0e+00
+/g4cmp/producePhonons 1.0e+00
+/g4cmp/sampleLuke 1.0e+00
+
+/hvev/voltage 0 volt
+
+/hvev/PrimaryParticleName e-
+/hvev/HitsRootFile ./Electron_0Vbias_KE10.0eV_center_impurities_nodownsampling_seed0.root
+/hvev/PrimariesFlag true
+
+# charge trapping - probability measured as 0.713+-0.093%
+/g4cmp/eTrappingMFP 1397.52 mm
+/g4cmp/hTrappingMFP 1397.52 mm
+# impac ionization - probability measured as 1.576+-0.110%
+/g4cmp/eDTrapIonizationMFP 629.50 mm 
+/g4cmp/eATrapIonizationMFP 629.50 mm
+/g4cmp/hDTrapIonizationMFP 629.50 mm
+/g4cmp/hATrapIonizationMFP 629.50 mm
+
+/run/initialize
+/gps/particle e-
+/gps/number 1
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 0. mm
+/gps/ene/mono 10.0 eV
+/run/beamOn 100
