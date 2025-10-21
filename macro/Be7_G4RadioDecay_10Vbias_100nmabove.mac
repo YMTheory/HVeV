@@ -1,0 +1,21 @@
+/tracking/verbose 0
+/random/setSeeds 474 0
+
+/g4cmp/phononBounces 1000 
+
+/g4cmp/produceCharges 1.0e+00
+/g4cmp/producePhonons 1.0e+00
+/g4cmp/sampleLuke 1.0e+00
+
+/hvev/voltage 10 volt
+
+/hvev/PrimaryParticleName Be7_G4
+/hvev/HitsRootFile ./Be7_G4RadioDecay_10Vbias_100nmabove_nodownsampling.root
+/hvev/PrimariesFlag true
+
+/run/initialize
+/gps/number 1
+/gps/pos/type Point
+/gps/pos/centre 0. 0. -1.9999 mm
+/gps/ene/mono 0.0 eV
+/run/beamOn 100
