@@ -3,7 +3,7 @@
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
 
-#include "G4CMPPhysicsList.hh"
+#include "HVeVPhysicsList.hh"
 #include "G4CMPPhysics.hh"
 #include "FTFP_BERT.hh"
 #include "G4DecayPhysics.hh"
@@ -27,17 +27,17 @@ int main(int argc,char** argv)
  runManager->SetUserInitialization(detector);
 
  // Old codes where only G4CMPPhysicsList was registered.
- //G4VUserPhysicsList* physics = new G4CMPPhysicsList();
- //physics->SetCuts();
- //runManager->SetUserInitialization(physics);
-
- FTFP_BERT* physics = new FTFP_BERT;  
- physics->RegisterPhysics(new G4CMPPhysics);
- physics->RegisterPhysics(new G4DecayPhysics);
- physics->RegisterPhysics(new G4RadioactiveDecayPhysics);
- physics->RegisterPhysics(new G4EmStandardPhysics);
+ G4VUserPhysicsList* physics = new HVeVPhysicsList();
  physics->SetCuts();
  runManager->SetUserInitialization(physics);
+
+// FTFP_BERT* physics = new FTFP_BERT;  
+// physics->RegisterPhysics(new G4CMPPhysics);
+// physics->RegisterPhysics(new G4DecayPhysics);
+// physics->RegisterPhysics(new G4RadioactiveDecayPhysics);
+// physics->RegisterPhysics(new G4EmStandardPhysics);
+// physics->SetCuts();
+// runManager->SetUserInitialization(physics);
  
  // Set user action classes (different for Geant4 10.0)
  //

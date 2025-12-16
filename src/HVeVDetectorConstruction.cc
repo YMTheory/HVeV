@@ -213,7 +213,7 @@ void HVeVDetectorConstruction::SetupGeometry()
         const G4double anhCutoff = 520., reflCutoff = 350.;   // Units external
 
         topSurfProp = new G4CMPSurfaceProperty("TopAlSurf", 1.0, 0.0, 0.0, 0.0, // the first 4 entries deal with e/h absorption and reflection
-    					  	        0.3, 1.0, 0.0, 0.0); // the last 4 entries deal with phonon absorption and reflection, [absorption, reflection, specular reflection ratio, ...]
+    					  	        1.0, 1.0, 0.0, 0.0); // the last 4 entries deal with phonon absorption and reflection, [absorption, reflection, specular reflection ratio, ...]
         topSurfProp->AddScatteringProperties(anhCutoff, reflCutoff, anhCoeffs,
     					 diffCoeffs, specCoeffs, GHz, GHz, GHz);
         AttachPhononSensor(topSurfProp);
@@ -283,7 +283,7 @@ AttachPhononSensor(G4CMPSurfaceProperty* surfProp)
     //surfProp->SetPhononElectrode(new G4CMPPhononElectrode);
     // TEST if the electrode object is attached
     //G4CMPPhononElectrode* electrode1 = surfProp->GetPhononElectrode();
-    G4CMPVElectrodePattern* electrode1 = surfProp->GetPhononElectrode();
+  //  G4CMPVElectrodePattern* electrode1 = surfProp->GetPhononElectrode();
 }
 
 void HVeVDetectorConstruction::

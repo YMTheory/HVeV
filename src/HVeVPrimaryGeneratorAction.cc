@@ -1,3 +1,25 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <random>
+using namespace std;
+
+double getNonNegativeGaussianRandom(double mean, double stddev) {
+    std::random_device rd;  // Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+    std::normal_distribution<> dist(mean, stddev);
+
+    double sample;
+    do {
+        sample = dist(gen); // Generate a new sample
+    } while (sample < 0);  // Continue if the sample is negative
+
+    return sample; // Return the non-negative sample
+}
+
 #include "HVeVPrimaryGeneratorAction.hh"
 #include "HVeVConfigManager.hh"
 
@@ -8,6 +30,7 @@
 #include "G4PhononTransSlow.hh"
 #include "G4PhononLong.hh"
 #include "G4Electron.hh"
+#include "G4Gamma.hh"
 #include "G4CMPDriftElectron.hh"
 #include "G4CMPDriftHole.hh"
 #include "G4SystemOfUnits.hh"
@@ -83,6 +106,18 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
     
     }
 
+    else if (f_primaryParticleName == "phonon") {
+        // Somehow there is no hit when I use G4GeneralParticleSource to generate Be7.
+    //    G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(4, 7, 0); // Z=4, A=7
+        fParticleGPS->SetParticleDefinition(G4PhononTransFast::Definition());
+        fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(0.0002 * eV);
+        fParticleGPS->GeneratePrimaryVertex(anEvent);
+
+    }
+
+
     else if (f_primaryParticleName == "Be7_G4") {
         // Somehow there is no hit when I use G4GeneralParticleSource to generate Be7.
         G4ParticleDefinition* ion = G4ParticleTable::GetParticleTable()->GetIonTable()->GetIon(4, 7, 0); // Z=4, A=7
@@ -101,7 +136,7 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(56.83 * eV);
-        fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType("Point");
+        fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType("Volume");
         //fParticleGPS->GetCurrentSource()->GetPosDist()->SetPosDisType(f_primaryParticlePosType);
         
         if (f_primaryParticlePosType == "Volume") {
@@ -116,7 +151,7 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
                                                  + 2 * f_primaryParticlePosHalfZ * RandVar;
             fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(r_primaryParticlePosCenterX, 
                                                                                           r_primaryParticlePosCenterY,
-                                                                                          r_primaryParticlePosCenterZ));
+                                                                                          -f_primaryParticlePosHalfZ+0.285*um));
         }
         
         if (f_primaryParticlePosType == "Point") {
@@ -166,6 +201,62 @@ void HVeVPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(56.83 * eV);
         fParticleGPS->GeneratePrimaryVertex(anEvent);
     }
+
+    else if (f_primaryParticleName == "BeEST") {
+        CLHEP::HepRandom::setTheSeed((unsigned)clock());
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::normal_distribution<double> distribution(28.747, 4.375); 
+
+        G4double energyDep = 0*eV;
+        G4double energyDepE = 0*eV;
+        G4double x = 10*mm*(G4UniformRand()-0.5);
+        G4double y = 10*mm*(G4UniformRand()-0.5);
+        G4double z = getNonNegativeGaussianRandom(285, 84)*nm-2*mm;
+
+        G4double prob = G4UniformRand();
+        G4double prob2 = G4UniformRand();
+        G4cout << "Random selector:  " << prob << G4endl;
+        if (prob < (0.8956)){
+           energyDep = 56.826*eV;}
+        else {
+           energyDep = distribution(gen)*eV;
+           fParticleGPS->SetParticleDefinition(G4Gamma::Definition());
+           fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(x,y,z));
+           fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+           fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+           fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(477.6035 * eV);
+ //          fParticleGPS->GeneratePrimaryVertex(anEvent);
+ //          G4cout << "478 keV Gamma Emission" << G4endl;}
+	   }
+  
+        if (prob2 < (0.07)){
+           energyDepE = 54.70*eV;
+           fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+           fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+           fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(energyDepE);
+           fParticleGPS->SetParticleDefinition(G4Electron::Definition());
+           fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(x,y,z));
+           fParticleGPS->GeneratePrimaryVertex(anEvent);
+           G4cout << "K-shell Auger Electron:  " << energyDepE << G4endl;
+        }
+ 
+        else{
+           energyDepE = 0*eV;}
+
+        G4cout << "Li Recoil Energy:  " << energyDep << G4endl;
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetEnergyDisType("Mono");
+        fParticleGPS->GetCurrentSource()->GetEneDist()->SetMonoEnergy(energyDep);
+
+        G4IonTable::GetIonTable()->CreateAllIon();
+        G4ParticleDefinition* ion = G4IonTable::GetIonTable()->GetIon(3, 7, 0.);
+
+        fParticleGPS->SetParticleCharge(0);
+        fParticleGPS->SetParticleDefinition(ion);
+        fParticleGPS->GetCurrentSource()->GetAngDist()->SetAngDistType("iso");
+        fParticleGPS->GetCurrentSource()->GetPosDist()->SetCentreCoords(G4ThreeVector(x,y,z));
+        fParticleGPS->GeneratePrimaryVertex(anEvent);
+       }
 
     else {
         fParticleGPS->GeneratePrimaryVertex(anEvent);
